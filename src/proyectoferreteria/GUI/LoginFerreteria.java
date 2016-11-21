@@ -11,6 +11,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import proyectoferreteria.BO.UsuariosBO;
+import proyectoferreteria.DAO.Conexion;
+import proyectoferreteria.DAO.UsuariosDAO;
 
 /**
  *
@@ -21,6 +28,7 @@ public class LoginFerreteria extends javax.swing.JFrame {
     /**
      * Creates new form LoginFerreteria
      */
+    UsuariosDAO metodp = new UsuariosDAO();
     public LoginFerreteria() {
         initComponents();
         ImageIcon imagen = new ImageIcon("src/Imagenes/candado.png");
@@ -135,23 +143,33 @@ public class LoginFerreteria extends javax.swing.JFrame {
     }
 
     private void btnEntrLogiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrLogiActionPerformed
-        // TODO add your handling code here:
-        char clave[] = txtContraLogi.getPassword();
-        String claveCorrec = new String (clave);
-        
-        if (txtUsuLogi.getText().equals("Administrador")&& claveCorrec.equals("12345"))
-        {
-            this.dispose();
-            RegistroProduc v = new RegistroProduc();
-            v.setVisible(true);
-        }
+        UsuariosBO objUsuari = new UsuariosBO();
+        objUsuari.setUsuario(txtUsuLogi.getText());
+        objUsuari.setContaseña(txtContraLogi.getText());
+        String Usuario = "";
+        String Coontraseña = "";
+
+        ResultSet resultado = metodp.Buscar(objUsuari);
+        try 
+        {           
+            while(resultado.next())
+            {
+                Usuario = resultado.getString(2);
+                Coontraseña = resultado.getString(3);
+            }
+            if(objUsuari.getUsuario().equals(Usuario)&& objUsuari.getContaseña().equals(Coontraseña))
+            {
+                MainForm abrir = new MainForm();
+                abrir.setVisible(true);
+            }
             else
+            {
+                JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
+            }
+        } catch (Exception ex) 
         {
-            JOptionPane.showMessageDialog(null, "Acceso denegado:\n"
-                    + "Por favor ingrese un usuario y/o contraseña correctos", "Acceso denegado",
-                    JOptionPane.ERROR_MESSAGE);
-        }
-            
+            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
+        } 
     }//GEN-LAST:event_btnEntrLogiActionPerformed
 
     /**

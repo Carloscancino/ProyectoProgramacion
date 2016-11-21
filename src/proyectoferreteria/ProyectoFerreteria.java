@@ -18,8 +18,8 @@ public class ProyectoFerreteria {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        //LoginFerreteria v = new LoginFerreteria();
-        MainForm v = new MainForm();
+        LoginFerreteria v = new LoginFerreteria();
+        //MainForm v = new MainForm();
         v.setVisible(true);
     }
     
