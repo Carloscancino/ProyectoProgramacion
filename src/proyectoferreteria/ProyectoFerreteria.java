@@ -5,7 +5,7 @@
  */
 package proyectoferreteria;
 
-import proyectoferreteria.GUI.LoginFerreteria;
+import proyectoferreteria.GUI.*;
 
 /**
  *
@@ -18,7 +18,8 @@ public class ProyectoFerreteria {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        LoginFerreteria v = new LoginFerreteria();
+        //LoginFerreteria v = new LoginFerreteria();
+        MainForm v = new MainForm();
         v.setVisible(true);
     }
     

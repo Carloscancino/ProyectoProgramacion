@@ -61,6 +61,8 @@ public class LoginFerreteria extends javax.swing.JFrame {
 
         lblContraLogi.setText("Contraseña:");
 
+        btnEntrLogi.setBackground(new java.awt.Color(95, 186, 125));
+        btnEntrLogi.setForeground(new java.awt.Color(255, 255, 255));
         btnEntrLogi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/palomita.png"))); // NOI18N
         btnEntrLogi.setText("Accesar");
         btnEntrLogi.setMaximumSize(new java.awt.Dimension(95, 25));
@@ -140,7 +142,7 @@ public class LoginFerreteria extends javax.swing.JFrame {
         if (txtUsuLogi.getText().equals("Administrador")&& claveCorrec.equals("12345"))
         {
             this.dispose();
-            RegistroProducto v = new RegistroProducto();
+            RegistroProduc v = new RegistroProduc();
             v.setVisible(true);
         }
             else
