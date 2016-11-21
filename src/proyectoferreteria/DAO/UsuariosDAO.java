@@ -15,8 +15,9 @@ public class UsuariosDAO
     {
         try
         {
-            String consulta = "SELECT * FROM usuarios Where UsuarioName = \""+objUsuarios.getUsuario()+"\" and Contraseña = \""+objUsuarios.getContaseña()+"\"";
-            PreparedStatement pstm = conn.conexion().prepareStatement(consulta);
+            String consulta = "SELECT * FROM usuarios Where UsuarioName = \""+objUsuarios.getUsuario()+"\" and Contrasenia = \""+objUsuarios.getContaseña()+"\"";
+            //String consulta = "SELECT * FROM usuarios Where UsuarioName = \""+objUsuarios.getUsuario()+"\" and Contraseña = \""+objUsuarios.getContaseña()+"\"";
+            PreparedStatement pstm = conn.ConectarSQLite().prepareStatement(consulta);
             ResultSet resultado = pstm.executeQuery();
             System.out.println("Listin...");
             return resultado;

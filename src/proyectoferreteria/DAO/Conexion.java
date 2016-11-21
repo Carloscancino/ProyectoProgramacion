@@ -5,11 +5,31 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import java.sql.*;
 
 
 public class Conexion 
 {     
+    String CadenaConexion = "jdbc:sqlite:C:\\Users\\elektra\\Documents\\Ferreteria.s3db";
     Connection conectar=null;  
+    
+    //SQLite
+    public Connection ConectarSQLite()
+    {
+        try
+        {
+            Class.forName("org.sqlite.JDBC");
+            this.conectar = DriverManager.getConnection(CadenaConexion);
+            System.out.println("Conectado...");
+        }
+        catch(Exception ex)
+        {
+            System.out.println("Error "+ex);
+        }
+        return this.conectar;
+    }
+    
+    //MySQL
     public Connection conexion()
     {  
         try {       
