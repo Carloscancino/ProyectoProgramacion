@@ -1,4 +1,4 @@
-package proyectoferreteria.DAO;
+package proyectoferreteria.Conexion;
 
 import java.awt.JobAttributes;
 import java.sql.Connection;
@@ -10,7 +10,7 @@ import java.sql.*;
 
 public class Conexion 
 {     
-    String CadenaConexion = "jdbc:sqlite:C:\\Users\\ORTIZ\\Documents\\Ferreteria.s3db";
+    String CadenaConexion = "jdbc:sqlite:C:\\Users\\elektra\\Documents\\Ferreteria.s3db";
     Connection conectar=null;  
     //HOLA ASESINOS
     //SQLite

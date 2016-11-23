@@ -16,7 +16,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import proyectoferreteria.BO.UsuariosBO;
-import proyectoferreteria.DAO.Conexion;
+import proyectoferreteria.Conexion.Conexion;
 import proyectoferreteria.DAO.UsuariosDAO;
 
 /**
@@ -154,13 +154,14 @@ public class LoginFerreteria extends javax.swing.JFrame {
         {           
             while(resultado.next())
             {
-                Usuario = resultado.getString(2);
-                Coontraseña = resultado.getString(3);
+                Usuario = resultado.getString(8);
+                Coontraseña = resultado.getString(9);
             }
             if(objUsuari.getUsuario().equals(Usuario)&& objUsuari.getContaseña().equals(Coontraseña))
             {
-                MainForm abrir = new MainForm();
-                abrir.setVisible(true);
+                PaginaPrincipal v = new PaginaPrincipal();
+                v.setVisible(true);
+                this.hide();
             }
             else
             {
