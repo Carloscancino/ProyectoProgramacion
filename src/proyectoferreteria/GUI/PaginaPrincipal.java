@@ -29,7 +29,7 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        InputStream Fondo1 = this.getClass().getResourceAsStream("/Imagenes/fondo_pr.png");
+        InputStream Fondo1 = this.getClass().getResourceAsStream("/Imagenes/fondo_ferri2.png");
         cargarImagen(jDesktop, Fondo1);
     }
     
