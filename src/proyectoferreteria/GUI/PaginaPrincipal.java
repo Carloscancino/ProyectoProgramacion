@@ -5,6 +5,7 @@
  */
 package proyectoferreteria.GUI;
 
+import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
 import javax.imageio.ImageIO;
@@ -319,13 +320,20 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
        CategoriaProducto v = new CategoriaProducto();
        jDesktop.add(v);
+        Dimension desktopSize = jDesktop.getSize();
+        Dimension FrameSize = v.getSize();
+        v.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);       
        v.setVisible(true);         
     }//GEN-LAST:event_menuItemCategoActionPerformed
 
     private void menuItemProveeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemProveeActionPerformed
         // TODO add your handling code here:
         VentanaProveedor v = new VentanaProveedor();
+        //v.setLocation(null);
         jDesktop.add(v);
+        Dimension desktopSize = jDesktop.getSize();
+        Dimension FrameSize = v.getSize();
+        v.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
         v.setVisible(true);
     }//GEN-LAST:event_menuItemProveeActionPerformed
 
@@ -333,6 +341,9 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         UnidadProducto v = new UnidadProducto();
         jDesktop.add(v);
+        Dimension desktopSize = jDesktop.getSize();
+        Dimension FrameSize = v.getSize();
+        v.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);        
         v.setVisible(true); 
     }//GEN-LAST:event_menuItemUnidActionPerformed
 
@@ -340,6 +351,9 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
        RegistroProduc v = new RegistroProduc();
        jDesktop.add(v);
+        Dimension desktopSize = jDesktop.getSize();
+        Dimension FrameSize = v.getSize();
+        v.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);       
        v.setVisible(true); 
     }//GEN-LAST:event_menuItemNueProdActionPerformed
 
@@ -347,6 +361,9 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         ProductosEliminados v = new ProductosEliminados();
         jDesktop.add(v);
+        Dimension desktopSize = jDesktop.getSize();
+        Dimension FrameSize = v.getSize();
+        v.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);        
         v.setVisible(true); 
     }//GEN-LAST:event_menuItemElimProdActionPerformed
 
@@ -356,6 +373,9 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         {
         NuevoUsuario v = new NuevoUsuario();
         jDesktop.add(v);
+        Dimension desktopSize = jDesktop.getSize();
+        Dimension FrameSize = v.getSize();
+        v.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);        
         v.setVisible(true); 
         }catch(Exception ex){JOptionPane.showMessageDialog(null, ex);}
     }//GEN-LAST:event_menuItemUsuaActionPerformed
@@ -368,6 +388,9 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         VentasRealizadas v = new VentasRealizadas();
         jDesktop.add(v);
+        Dimension desktopSize = jDesktop.getSize();
+        Dimension FrameSize = v.getSize();
+        v.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);        
         v.setVisible(true); 
     }//GEN-LAST:event_menuItemRealVenActionPerformed
 
@@ -375,6 +398,9 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         VentasFallidas v = new VentasFallidas();
         jDesktop.add(v);
+        Dimension desktopSize = jDesktop.getSize();
+        Dimension FrameSize = v.getSize();
+        v.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);        
         v.setVisible(true); 
     }//GEN-LAST:event_menuItemFalliVenActionPerformed
 
@@ -382,6 +408,9 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         BuscarVentas v = new BuscarVentas();
         jDesktop.add(v);
+        Dimension desktopSize = jDesktop.getSize();
+        Dimension FrameSize = v.getSize();
+        v.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);        
         v.setVisible(true); 
     }//GEN-LAST:event_menuItemBusVenActionPerformed
 
@@ -389,6 +418,9 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         AnularVenta v = new AnularVenta();
         jDesktop.add(v);
+        Dimension desktopSize = jDesktop.getSize();
+        Dimension FrameSize = v.getSize();
+        v.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);        
         v.setVisible(true); 
     }//GEN-LAST:event_menuAnulVentaActionPerformed
 
@@ -396,6 +428,9 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         AnularCompra v = new AnularCompra();
         jDesktop.add(v);
+        Dimension desktopSize = jDesktop.getSize();
+        Dimension FrameSize = v.getSize();
+        v.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);        
         v.setVisible(true); 
     }//GEN-LAST:event_menuAnulComprActionPerformed
 
@@ -403,6 +438,9 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         RespaldarBD v = new RespaldarBD();
         jDesktop.add(v);
+        Dimension desktopSize = jDesktop.getSize();
+        Dimension FrameSize = v.getSize();
+        v.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);        
         v.setVisible(true); 
     }//GEN-LAST:event_menuRespBDActionPerformed
 
@@ -410,6 +448,9 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         RestaurarBD v = new RestaurarBD();
         jDesktop.add(v);
+        Dimension desktopSize = jDesktop.getSize();
+        Dimension FrameSize = v.getSize();
+        v.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);        
         v.setVisible(true); 
     }//GEN-LAST:event_menuRestBDActionPerformed
 

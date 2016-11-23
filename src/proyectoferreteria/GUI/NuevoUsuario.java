@@ -21,10 +21,10 @@ public class NuevoUsuario extends javax.swing.JInternalFrame {
     public NuevoUsuario() {
         initComponents();
         
-        ImageIcon imagen = new ImageIcon("src/Imagenes/usuario2.png");
-        Icon icono = new ImageIcon (imagen.getImage().getScaledInstance(lblImagenUsuario.getWidth(), lblImagenUsuario.getHeight(), Image.SCALE_DEFAULT));
-        lblImagenUsuario.setIcon(icono);
-        this.repaint();
+//        ImageIcon imagen = new ImageIcon("src/Imagenes/usuario2.png");
+//        Icon icono = new ImageIcon (imagen.getImage().getScaledInstance(lblImagenUsuario.getWidth(), lblImagenUsuario.getHeight(), Image.SCALE_DEFAULT));
+//        lblImagenUsuario.setIcon(icono);
+//        this.repaint();
         //this.setLocationRelativeTo(null);
     }
 
