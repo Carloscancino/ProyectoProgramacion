@@ -8,21 +8,34 @@ package proyectoferreteria.GUI;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import javax.imageio.ImageIO;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import proyectoferreteria.BO.UsuariosBO;
 import proyectoferreteria.DAO.Fondo;
+import proyectoferreteria.DAO.UsuariosDAO;
 
 /**
  *
  * @author Emmanuel
  */
-public class PaginaPrincipal extends javax.swing.JFrame {
+public class PaginaPrincipal extends javax.swing.JFrame implements Runnable{
+    String hora,minutos,segundos,ampm;
+    Calendar calendario;
+    Thread h1;
 
     /**
      * Creates new form PaginaPrincipal
      */
+    UsuariosDAO metodp = new UsuariosDAO();
     public PaginaPrincipal() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -30,6 +43,12 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         InputStream Fondo1 = this.getClass().getResourceAsStream("/Imagenes/background.jpg");
         cargarImagen(jDesktop, Fondo1);
+        
+        h1 = new Thread(this);
+        h1.start();
+        traerUsuario();
+//        lblPrincHora.setText(horaActual());
+        lblPrincFecha.setText(fechaActual());
     }
 
     /**
@@ -43,6 +62,12 @@ public class PaginaPrincipal extends javax.swing.JFrame {
 
         jFrame1 = new javax.swing.JFrame();
         jDesktop = new javax.swing.JDesktopPane();
+        pnlEstado = new javax.swing.JPanel();
+        lblUsuario = new javax.swing.JLabel();
+        lblEstadoUsuario = new javax.swing.JLabel();
+        lblPrincHora = new javax.swing.JLabel();
+        lblPrincFecha = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuSistema = new javax.swing.JMenu();
         menuItemSalir = new javax.swing.JMenuItem();
@@ -54,8 +79,9 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         menuItemUnid = new javax.swing.JMenuItem();
         menuCompra = new javax.swing.JMenu();
         menuItemProvee = new javax.swing.JMenuItem();
-        menuUsuario = new javax.swing.JMenu();
-        menuItemUsua = new javax.swing.JMenuItem();
+        menuItemCompras = new javax.swing.JMenuItem();
+        menuEmpleado = new javax.swing.JMenu();
+        menuItemEmplea = new javax.swing.JMenuItem();
         menuVentas = new javax.swing.JMenu();
         menuItemBusVen = new javax.swing.JMenuItem();
         menuConsultas = new javax.swing.JMenu();
@@ -85,15 +111,59 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Página Principal Administrador");
 
+        lblUsuario.setText("Usuario:");
+
+        lblEstadoUsuario.setText("Estado");
+
+        lblPrincHora.setText("hh:mm:ss");
+
+        lblPrincFecha.setText("dd/mm/aaa");
+
+        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
+        javax.swing.GroupLayout pnlEstadoLayout = new javax.swing.GroupLayout(pnlEstado);
+        pnlEstado.setLayout(pnlEstadoLayout);
+        pnlEstadoLayout.setHorizontalGroup(
+            pnlEstadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlEstadoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblUsuario)
+                .addGap(18, 18, 18)
+                .addComponent(lblEstadoUsuario)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 595, Short.MAX_VALUE)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 7, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblPrincHora)
+                .addGap(18, 18, 18)
+                .addComponent(lblPrincFecha)
+                .addContainerGap())
+        );
+        pnlEstadoLayout.setVerticalGroup(
+            pnlEstadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlEstadoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlEstadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblUsuario)
+                    .addComponent(lblEstadoUsuario)
+                    .addComponent(lblPrincHora)
+                    .addComponent(lblPrincFecha))
+                .addContainerGap())
+            .addComponent(jSeparator1)
+        );
+
+        jDesktop.setLayer(pnlEstado, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         javax.swing.GroupLayout jDesktopLayout = new javax.swing.GroupLayout(jDesktop);
         jDesktop.setLayout(jDesktopLayout);
         jDesktopLayout.setHorizontalGroup(
             jDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 730, Short.MAX_VALUE)
+            .addComponent(pnlEstado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jDesktopLayout.setVerticalGroup(
             jDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 449, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopLayout.createSequentialGroup()
+                .addGap(0, 413, Short.MAX_VALUE)
+                .addComponent(pnlEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         menuSistema.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/sistema.png"))); // NOI18N
@@ -168,21 +238,30 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         });
         menuCompra.add(menuItemProvee);
 
-        jMenuBar1.add(menuCompra);
-
-        menuUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/usuarios2.png"))); // NOI18N
-        menuUsuario.setText("Usuario");
-
-        menuItemUsua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/usuario.png"))); // NOI18N
-        menuItemUsua.setText("Gestión Usuarios");
-        menuItemUsua.addActionListener(new java.awt.event.ActionListener() {
+        menuItemCompras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/compras2.png"))); // NOI18N
+        menuItemCompras.setText("Ingresar Compras");
+        menuItemCompras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItemUsuaActionPerformed(evt);
+                menuItemComprasActionPerformed(evt);
             }
         });
-        menuUsuario.add(menuItemUsua);
+        menuCompra.add(menuItemCompras);
 
-        jMenuBar1.add(menuUsuario);
+        jMenuBar1.add(menuCompra);
+
+        menuEmpleado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/usuarios2.png"))); // NOI18N
+        menuEmpleado.setText("Empleados");
+
+        menuItemEmplea.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/usuario.png"))); // NOI18N
+        menuItemEmplea.setText("Gestión Empleados");
+        menuItemEmplea.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemEmpleaActionPerformed(evt);
+            }
+        });
+        menuEmpleado.add(menuItemEmplea);
+
+        jMenuBar1.add(menuEmpleado);
 
         menuVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/venta.png"))); // NOI18N
         menuVentas.setText("Ventas");
@@ -300,11 +379,54 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void run(){
+        Thread ct = Thread.currentThread();
+        while(ct == h1) {
+            calcula();
+            lblPrincHora.setText(hora + ":" + minutos + ":" + segundos + " "+ampm);
+            try 
+            {
+                Thread.sleep(1000);
+            }
+            catch(InterruptedException e) 
+            {}
+        }
+    }
+    
+    public void traerUsuario(){
+        try {
+            UsuariosBO objUsuari = new UsuariosBO();
+            ResultSet resultado = metodp.Buscar(objUsuari);
+            while (resultado.next()) {
+                String Usuario = resultado.getString(8);
+                lblEstadoUsuario.setText(Usuario);
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+    }
+    
     private void menuItemSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemSalirActionPerformed
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_menuItemSalirActionPerformed
 
+    public void calcula () {
+        Calendar calendario = new GregorianCalendar();
+        Date fechaHoraActual = new Date();
+
+        calendario.setTime(fechaHoraActual);
+        ampm = calendario.get(Calendar.AM_PM)==Calendar.AM?"AM":"PM";
+        if(ampm.equals("PM")){
+            int h = calendario.get(Calendar.HOUR_OF_DAY)-12;
+            hora = h>9?""+h:"0"+h;
+        }
+        else
+        {
+            hora = calendario.get(Calendar.HOUR_OF_DAY)>9?""+calendario.get(Calendar.HOUR_OF_DAY):"0"+calendario.get(Calendar.HOUR_OF_DAY); }
+        minutos = calendario.get(Calendar.MINUTE)>9?""+calendario.get(Calendar.MINUTE):"0"+calendario.get(Calendar.MINUTE);
+        segundos = calendario.get(Calendar.SECOND)>9?""+calendario.get(Calendar.SECOND):"0"+calendario.get(Calendar.SECOND);
+}
     public void cargarImagen(JDesktopPane jdes, InputStream imagen)
     {
         try
@@ -314,6 +436,19 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         }
         catch(Exception ex)
         {} 
+    }
+    public static String fechaActual()
+    {
+        Date fecha = new Date();
+        SimpleDateFormat formatofecha = new SimpleDateFormat("dd/MM/YYYY");
+        return formatofecha.format(fecha);
+    }
+    
+    public static String horaActual()
+    {
+        Date hora = new Date();
+        SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm:ss");
+        return formatoHora.format(hora);
     }
         
     private void menuItemCategoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCategoActionPerformed
@@ -367,18 +502,18 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         v.setVisible(true); 
     }//GEN-LAST:event_menuItemElimProdActionPerformed
 
-    private void menuItemUsuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemUsuaActionPerformed
+    private void menuItemEmpleaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemEmpleaActionPerformed
         // TODO add your handling code here:
         try
         {
-        NuevoUsuario v = new NuevoUsuario();
+        NuevoEmpleados v = new NuevoEmpleados();
         jDesktop.add(v);
         Dimension desktopSize = jDesktop.getSize();
         Dimension FrameSize = v.getSize();
         v.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);        
         v.setVisible(true); 
         }catch(Exception ex){JOptionPane.showMessageDialog(null, ex);}
-    }//GEN-LAST:event_menuItemUsuaActionPerformed
+    }//GEN-LAST:event_menuItemEmpleaActionPerformed
 
     private void menuReportProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuReportProdActionPerformed
         // TODO add your handling code here:
@@ -454,6 +589,16 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         v.setVisible(true); 
     }//GEN-LAST:event_menuRestBDActionPerformed
 
+    private void menuItemComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemComprasActionPerformed
+        // TODO add your handling code here:
+        VentanaCompras v = new VentanaCompras();
+        jDesktop.add(v);
+        Dimension desktopSize = jDesktop.getSize();
+        Dimension FrameSize = v.getSize();
+        v.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);        
+        v.setVisible(true); 
+    }//GEN-LAST:event_menuItemComprasActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -494,6 +639,11 @@ public class PaginaPrincipal extends javax.swing.JFrame {
     private javax.swing.JFrame jFrame1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lblEstadoUsuario;
+    private javax.swing.JLabel lblPrincFecha;
+    private javax.swing.JLabel lblPrincHora;
+    private javax.swing.JLabel lblUsuario;
     private javax.swing.JMenu menuAcerca;
     private javax.swing.JMenu menuAlmacen;
     private javax.swing.JMenuItem menuAnulCompr;
@@ -501,10 +651,13 @@ public class PaginaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu menuAnular;
     private javax.swing.JMenu menuCompra;
     private javax.swing.JMenu menuConsultas;
+    private javax.swing.JMenu menuEmpleado;
     private javax.swing.JMenu menuHerramien;
     private javax.swing.JMenuItem menuItemBusVen;
     private javax.swing.JMenuItem menuItemCatego;
+    private javax.swing.JMenuItem menuItemCompras;
     private javax.swing.JMenuItem menuItemElimProd;
+    private javax.swing.JMenuItem menuItemEmplea;
     private javax.swing.JMenuItem menuItemFalliVen;
     private javax.swing.JMenuItem menuItemNueProd;
     private javax.swing.JMenu menuItemProd;
@@ -512,12 +665,11 @@ public class PaginaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuItemRealVen;
     private javax.swing.JMenuItem menuItemSalir;
     private javax.swing.JMenuItem menuItemUnid;
-    private javax.swing.JMenuItem menuItemUsua;
     private javax.swing.JMenuItem menuReportProd;
     private javax.swing.JMenuItem menuRespBD;
     private javax.swing.JMenuItem menuRestBD;
     private javax.swing.JMenu menuSistema;
-    private javax.swing.JMenu menuUsuario;
     private javax.swing.JMenu menuVentas;
+    private javax.swing.JPanel pnlEstado;
     // End of variables declaration//GEN-END:variables
 }
