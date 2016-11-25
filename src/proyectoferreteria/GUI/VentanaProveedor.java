@@ -5,17 +5,32 @@
  */
 package proyectoferreteria.GUI;
 
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import proyectoferreteria.BO.ProveedorBO;
+import proyectoferreteria.DAO.ProveedorDAO;
+
 /**
  *
  * @author Emmanuel
  */
 public class VentanaProveedor extends javax.swing.JInternalFrame {
+        DefaultTableModel dtm= new DefaultTableModel(
+        new Object [][] { },
+        new String [] {
+        "Código", "Nombre", "Direccion", "Email","Telefono"
+    });
+    ProveedorBO ObjUsuariosBO= new ProveedorBO();
+    ProveedorDAO objUsuariosDAO= new ProveedorDAO();
 
     /**
      * Creates new form VentanaProveedor
      */
     public VentanaProveedor() {
         initComponents();
+        ActualizarTabla();
+        txtCodigoProve.setEnabled(false);
     }
 
     /**
@@ -29,23 +44,22 @@ public class VentanaProveedor extends javax.swing.JInternalFrame {
 
         pnlPrinProve = new javax.swing.JPanel();
         txtNombVENProve = new javax.swing.JLabel();
-        txtNombrVENProve = new javax.swing.JTextField();
+        txtNombreProve = new javax.swing.JTextField();
         lblDireccVENProve = new javax.swing.JLabel();
-        txtDireccVENProve = new javax.swing.JTextField();
-        btnBuscProveVENProve = new javax.swing.JButton();
+        txtDireccionProve = new javax.swing.JTextField();
         lblTelVENProve = new javax.swing.JLabel();
-        txtTelVENProve = new javax.swing.JTextField();
-        lblCiudVENProve = new javax.swing.JLabel();
-        txtCiudaVENProve = new javax.swing.JTextField();
+        txtTelefonoProve = new javax.swing.JTextField();
         lblCorreVENProve = new javax.swing.JLabel();
-        txtCorreVENProve = new javax.swing.JTextField();
+        txtCorreoProve = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
-        btnAgreVENProve = new javax.swing.JButton();
-        btnModifVENProve = new javax.swing.JButton();
-        btnElimVENProve = new javax.swing.JButton();
-        btnLimpVENProve = new javax.swing.JButton();
+        btnAgregarProveedor = new javax.swing.JButton();
+        btnModificarProveedor = new javax.swing.JButton();
+        btnEliminarProveedor = new javax.swing.JButton();
+        btnLimpiarProveedor = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        txtCodigoProve = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblProveedor = new javax.swing.JTable();
 
         setClosable(true);
 
@@ -53,35 +67,51 @@ public class VentanaProveedor extends javax.swing.JInternalFrame {
 
         txtNombVENProve.setText("Nombre:");
 
-        txtNombrVENProve.addActionListener(new java.awt.event.ActionListener() {
+        txtNombreProve.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNombrVENProveActionPerformed(evt);
+                txtNombreProveActionPerformed(evt);
             }
         });
 
         lblDireccVENProve.setText("Dirección:");
 
-        btnBuscProveVENProve.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscar.png"))); // NOI18N
-
         lblTelVENProve.setText("Teléfono:");
-
-        lblCiudVENProve.setText("Ciudad:");
 
         lblCorreVENProve.setText("E-MAIL:");
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Opciones"));
 
-        btnAgreVENProve.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/palomita.png"))); // NOI18N
-        btnAgreVENProve.setText("Agregar");
+        btnAgregarProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/palomita.png"))); // NOI18N
+        btnAgregarProveedor.setText("Agregar");
+        btnAgregarProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarProveedorActionPerformed(evt);
+            }
+        });
 
-        btnModifVENProve.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/modificar.png"))); // NOI18N
-        btnModifVENProve.setText("Modificar");
+        btnModificarProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/modificar.png"))); // NOI18N
+        btnModificarProveedor.setText("Modificar");
+        btnModificarProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarProveedorActionPerformed(evt);
+            }
+        });
 
-        btnElimVENProve.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancelar.png"))); // NOI18N
-        btnElimVENProve.setText("Elimnar");
+        btnEliminarProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancelar.png"))); // NOI18N
+        btnEliminarProveedor.setText("Elimnar");
+        btnEliminarProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarProveedorActionPerformed(evt);
+            }
+        });
 
-        btnLimpVENProve.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/salir.png"))); // NOI18N
-        btnLimpVENProve.setText("Salir");
+        btnLimpiarProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/salir.png"))); // NOI18N
+        btnLimpiarProveedor.setText("Limpiar");
+        btnLimpiarProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarProveedorActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -89,13 +119,13 @@ public class VentanaProveedor extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(btnAgreVENProve)
+                .addComponent(btnAgregarProveedor)
                 .addGap(18, 18, 18)
-                .addComponent(btnModifVENProve)
+                .addComponent(btnModificarProveedor)
                 .addGap(18, 18, 18)
-                .addComponent(btnElimVENProve)
+                .addComponent(btnEliminarProveedor)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                .addComponent(btnLimpVENProve)
+                .addComponent(btnLimpiarProveedor)
                 .addGap(21, 21, 21))
         );
         jPanel2Layout.setVerticalGroup(
@@ -103,77 +133,76 @@ public class VentanaProveedor extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAgreVENProve)
-                    .addComponent(btnModifVENProve)
-                    .addComponent(btnElimVENProve)
-                    .addComponent(btnLimpVENProve))
+                    .addComponent(btnAgregarProveedor)
+                    .addComponent(btnModificarProveedor)
+                    .addComponent(btnEliminarProveedor)
+                    .addComponent(btnLimpiarProveedor))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jLabel1.setText("Codigo:");
 
         javax.swing.GroupLayout pnlPrinProveLayout = new javax.swing.GroupLayout(pnlPrinProve);
         pnlPrinProve.setLayout(pnlPrinProveLayout);
         pnlPrinProveLayout.setHorizontalGroup(
             pnlPrinProveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlPrinProveLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addGroup(pnlPrinProveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblDireccVENProve)
-                    .addComponent(txtNombVENProve)
-                    .addComponent(lblCorreVENProve))
                 .addGroup(pnlPrinProveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlPrinProveLayout.createSequentialGroup()
-                        .addGap(9, 9, 9)
-                        .addComponent(txtCorreVENProve, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlPrinProveLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
+                        .addGap(23, 23, 23)
+                        .addGroup(pnlPrinProveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblDireccVENProve)
+                            .addComponent(txtNombVENProve)
+                            .addComponent(lblCorreVENProve))
                         .addGroup(pnlPrinProveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlPrinProveLayout.createSequentialGroup()
-                                .addComponent(txtNombrVENProve, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnBuscProveVENProve))
-                            .addComponent(txtDireccVENProve, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(38, 38, 38)
-                .addGroup(pnlPrinProveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblCiudVENProve)
-                    .addGroup(pnlPrinProveLayout.createSequentialGroup()
-                        .addComponent(lblTelVENProve)
+                                .addGap(9, 9, 9)
+                                .addComponent(txtCorreoProve, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnlPrinProveLayout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addGroup(pnlPrinProveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtDireccionProve, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtNombreProve, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(41, 41, 41)
+                        .addGroup(pnlPrinProveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblTelVENProve)
+                            .addComponent(jLabel1))
                         .addGap(18, 18, 18)
-                        .addGroup(pnlPrinProveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtCiudaVENProve, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
-                            .addComponent(txtTelVENProve))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrinProveLayout.createSequentialGroup()
-                .addContainerGap(109, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                        .addGroup(pnlPrinProveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtTelefonoProve, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCodigoProve, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(pnlPrinProveLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         pnlPrinProveLayout.setVerticalGroup(
             pnlPrinProveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlPrinProveLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addGap(18, 18, 18)
                 .addGroup(pnlPrinProveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnBuscProveVENProve, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(pnlPrinProveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(txtCodigoProve, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlPrinProveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtNombVENProve)
-                        .addComponent(txtNombrVENProve, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtNombreProve, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(23, 23, 23)
                 .addGroup(pnlPrinProveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDireccVENProve)
-                    .addComponent(txtDireccVENProve, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDireccionProve, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblTelVENProve)
-                    .addComponent(txtTelVENProve, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTelefonoProve, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addGroup(pnlPrinProveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCorreVENProve, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCorreVENProve)
-                    .addComponent(txtCiudaVENProve, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCiudVENProve))
+                    .addComponent(txtCorreoProve, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCorreVENProve))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(55, 55, 55))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblProveedor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -184,7 +213,12 @@ public class VentanaProveedor extends javax.swing.JInternalFrame {
                 "ID", "Nombre", "Dirección", "Ciudad", "Teléfono", "E-MAIL"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tblProveedor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblProveedorMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblProveedor);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -195,27 +229,109 @@ public class VentanaProveedor extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 25, Short.MAX_VALUE)
                         .addComponent(pnlPrinProve, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(65, Short.MAX_VALUE)
                 .addComponent(pnlPrinProve, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtNombrVENProveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombrVENProveActionPerformed
+    private void txtNombreProveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreProveActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombrVENProveActionPerformed
+    }//GEN-LAST:event_txtNombreProveActionPerformed
 
+    private void btnAgregarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProveedorActionPerformed
+        // TODO add your handling code here:
+        if(objUsuariosDAO.Agregar(RecoletarDatos())==1)
+        {
+            JOptionPane.showMessageDialog(null,"Información Agregada");
+        }
+     
+     ActualizarTabla();
+     Limpiar();
+    }//GEN-LAST:event_btnAgregarProveedorActionPerformed
+
+    private void btnEliminarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarProveedorActionPerformed
+        // TODO add your handling code here:
+        if(objUsuariosDAO.Eliminar(RecoletarDatos())==1)
+        {
+            JOptionPane.showMessageDialog(null,"Información eliminada");
+        }
+        ActualizarTabla();
+        Limpiar();
+    }//GEN-LAST:event_btnEliminarProveedorActionPerformed
+
+    private void btnLimpiarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarProveedorActionPerformed
+        // TODO add your handling code here:
+        Limpiar();
+    }//GEN-LAST:event_btnLimpiarProveedorActionPerformed
+
+    private void btnModificarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarProveedorActionPerformed
+        // TODO add your handling code here:
+        if(objUsuariosDAO.Modificar(RecoletarDatos())==1)
+        {
+            JOptionPane.showMessageDialog(null,"Información modificada");
+        }
+        ActualizarTabla();
+        Limpiar();
+    }//GEN-LAST:event_btnModificarProveedorActionPerformed
+
+    private void tblProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProveedorMouseClicked
+        // TODO add your handling code here:
+        int row = tblProveedor.getSelectedRow();
+        System.out.println("--"+row);
+        
+        JTable target = (JTable)evt.getSource();
+        txtCodigoProve.setText(target.getValueAt(target.getSelectedRow(), 0).toString());
+        txtNombreProve.setText(target.getValueAt(target.getSelectedRow(), 1).toString());
+        txtDireccionProve.setText(target.getValueAt(target.getSelectedRow(), 2).toString());
+        txtCorreoProve.setText(target.getValueAt(target.getSelectedRow(), 3).toString());
+        txtTelefonoProve.setText(target.getValueAt(target.getSelectedRow(), 4).toString());
+        
+        
+         btnEliminarProveedor.setEnabled(true);
+         btnModificarProveedor.setEnabled(true);
+         btnAgregarProveedor.setEnabled(false);
+         
+    }//GEN-LAST:event_tblProveedorMouseClicked
+
+    public void Limpiar(){
+  txtCodigoProve.setText("");
+  txtNombreProve.setText("");
+  txtDireccionProve.setText("");
+  txtCorreoProve.setText("");
+  txtTelefonoProve.setText("");
+
+  btnEliminarProveedor.setEnabled(false);
+  btnModificarProveedor.setEnabled(false);
+  btnAgregarProveedor.setEnabled(true);
+   
+  } 
+  
+  public ProveedorBO RecoletarDatos(){
+        
+        ObjUsuariosBO.setCodigo(txtCodigoProve.getText());
+        ObjUsuariosBO.setNombre(txtNombreProve.getText());
+        ObjUsuariosBO.setDireccion(txtDireccionProve.getText());
+        ObjUsuariosBO.setEmail(txtCorreoProve.getText());
+        ObjUsuariosBO.setTelefono(txtTelefonoProve.getText());
+        
+        return ObjUsuariosBO;
+    }
+
+ public void ActualizarTabla(){
+    tblProveedor.setModel(objUsuariosDAO.Buscar(RecoletarDatos()));
+    }  
     /**
      * @param args the command line arguments
      */
@@ -252,24 +368,23 @@ public class VentanaProveedor extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAgreVENProve;
-    private javax.swing.JButton btnBuscProveVENProve;
-    private javax.swing.JButton btnElimVENProve;
-    private javax.swing.JButton btnLimpVENProve;
-    private javax.swing.JButton btnModifVENProve;
+    private javax.swing.JButton btnAgregarProveedor;
+    private javax.swing.JButton btnEliminarProveedor;
+    private javax.swing.JButton btnLimpiarProveedor;
+    private javax.swing.JButton btnModificarProveedor;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JLabel lblCiudVENProve;
     private javax.swing.JLabel lblCorreVENProve;
     private javax.swing.JLabel lblDireccVENProve;
     private javax.swing.JLabel lblTelVENProve;
     private javax.swing.JPanel pnlPrinProve;
-    private javax.swing.JTextField txtCiudaVENProve;
-    private javax.swing.JTextField txtCorreVENProve;
-    private javax.swing.JTextField txtDireccVENProve;
+    private javax.swing.JTable tblProveedor;
+    private javax.swing.JTextField txtCodigoProve;
+    private javax.swing.JTextField txtCorreoProve;
+    private javax.swing.JTextField txtDireccionProve;
     private javax.swing.JLabel txtNombVENProve;
-    private javax.swing.JTextField txtNombrVENProve;
-    private javax.swing.JTextField txtTelVENProve;
+    private javax.swing.JTextField txtNombreProve;
+    private javax.swing.JTextField txtTelefonoProve;
     // End of variables declaration//GEN-END:variables
 }
