@@ -5,19 +5,64 @@
  */
 package proyectoferreteria.GUI;
 
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import proyectoferreteria.BO.CategorioBO;
+import proyectoferreteria.DAO.CategoriaDAO;
+
 /**
  *
  * @author Emmanuel
  */
 public class CategoriaProducto extends javax.swing.JInternalFrame {
 
+    CategoriaDAO objCategoriaDAO = new CategoriaDAO();
+    CategorioBO objCategoriaBO = new CategorioBO();
     /**
      * Creates new form CategoriaProducto
      */
     public CategoriaProducto() {
         initComponents();
+        actualizarJtable();
+        botonesAgregar();
     }
-
+    DefaultTableModel dtm =new DefaultTableModel(
+        new Object [][] {},
+        new String [] {
+            "Código", "Nombre"
+        }
+    );
+    public void actualizarJtable()
+    {
+        //dtm = objUsuariosDAO.Buscar(objUsuariosBO);
+        DefaultTableModel newDtm = objCategoriaDAO.Buscar();
+        jtblCATEProd.setModel(newDtm); 
+    }
+    public CategorioBO RecuperarDatos()
+    {
+        objCategoriaBO.setCodigo(txtIdCateCATEProd.getText());
+        objCategoriaBO.setNombre(txtCateCATEProd.getText());
+        return objCategoriaBO;
+    }    
+    public void Limpiar()
+    {
+        txtIdCateCATEProd.setText("");
+        txtCateCATEProd.setText("");
+    }
+    public void botonesAgregar()
+    {
+        btnAgreCATEProd.setEnabled(true);
+        btnActuCATEProd.setEnabled(false);
+        btnElimCATEProd.setEnabled(false);       
+    }
+    public void botonesModificar()
+    {
+        btnAgreCATEProd.setEnabled(false);
+        btnActuCATEProd.setEnabled(true);
+        btnElimCATEProd.setEnabled(true);       
+    }    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -31,12 +76,16 @@ public class CategoriaProducto extends javax.swing.JInternalFrame {
         jPanel2 = new javax.swing.JPanel();
         lblCateCATEProd = new javax.swing.JLabel();
         txtCateCATEProd = new javax.swing.JTextField();
+        lblCateCATEProd1 = new javax.swing.JLabel();
+        txtIdCateCATEProd = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         btnAgreCATEProd = new javax.swing.JButton();
         btnActuCATEProd = new javax.swing.JButton();
         btnElimCATEProd = new javax.swing.JButton();
+        btnLimpCATEProd = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtblCATEProd = new javax.swing.JTable();
+        btnBuscCATEProd = new javax.swing.JButton();
 
         setClosable(true);
 
@@ -44,48 +93,87 @@ public class CategoriaProducto extends javax.swing.JInternalFrame {
 
         lblCateCATEProd.setText("CATEGORÍA:");
 
+        lblCateCATEProd1.setText("ID::");
+
+        txtIdCateCATEProd.setEnabled(false);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblCateCATEProd)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtCateCATEProd, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(lblCateCATEProd)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtCateCATEProd, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(lblCateCATEProd1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtIdCateCATEProd, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(93, 93, 93)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblCateCATEProd1)
+                    .addComponent(txtIdCateCATEProd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCateCATEProd)
                     .addComponent(txtCateCATEProd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         btnAgreCATEProd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/palomita.png"))); // NOI18N
         btnAgreCATEProd.setText("Agregar");
+        btnAgreCATEProd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgreCATEProdActionPerformed(evt);
+            }
+        });
 
         btnActuCATEProd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/actualizar.png"))); // NOI18N
         btnActuCATEProd.setText("Actualizar");
+        btnActuCATEProd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActuCATEProdActionPerformed(evt);
+            }
+        });
 
         btnElimCATEProd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancelar.png"))); // NOI18N
         btnElimCATEProd.setText("Eliminar");
+        btnElimCATEProd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnElimCATEProdActionPerformed(evt);
+            }
+        });
+
+        btnLimpCATEProd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancelar.png"))); // NOI18N
+        btnLimpCATEProd.setText("Limpiar");
+        btnLimpCATEProd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpCATEProdActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(btnAgreCATEProd)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnActuCATEProd)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnElimCATEProd)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addComponent(btnLimpCATEProd)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -94,22 +182,21 @@ public class CategoriaProducto extends javax.swing.JInternalFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAgreCATEProd)
                     .addComponent(btnActuCATEProd)
-                    .addComponent(btnElimCATEProd))
-                .addContainerGap(13, Short.MAX_VALUE))
+                    .addComponent(btnElimCATEProd)
+                    .addComponent(btnLimpCATEProd))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jtblCATEProd.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "ID", "Categoría"
+        jtblCATEProd.setModel(dtm);
+        jtblCATEProd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtblCATEProdMouseClicked(evt);
             }
-        ));
+        });
         jScrollPane1.setViewportView(jtblCATEProd);
+
+        btnBuscCATEProd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscar.png"))); // NOI18N
+        btnBuscCATEProd.setText("Buscar");
 
         javax.swing.GroupLayout pnlPrinCATEProdLayout = new javax.swing.GroupLayout(pnlPrinCATEProd);
         pnlPrinCATEProd.setLayout(pnlPrinCATEProdLayout);
@@ -117,18 +204,30 @@ public class CategoriaProducto extends javax.swing.JInternalFrame {
             pnlPrinCATEProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlPrinCATEProdLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlPrinCATEProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(pnlPrinCATEProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(pnlPrinCATEProdLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(pnlPrinCATEProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(pnlPrinCATEProdLayout.createSequentialGroup()
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnBuscCATEProd)
+                                .addGap(34, 34, 34)))))
+                .addContainerGap())
         );
         pnlPrinCATEProdLayout.setVerticalGroup(
             pnlPrinCATEProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlPrinCATEProdLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlPrinCATEProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlPrinCATEProdLayout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrinCATEProdLayout.createSequentialGroup()
+                        .addComponent(btnBuscCATEProd)
+                        .addGap(31, 31, 31)))
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -141,19 +240,103 @@ public class CategoriaProducto extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pnlPrinCATEProd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(pnlPrinCATEProd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(19, Short.MAX_VALUE)
                 .addComponent(pnlPrinCATEProd, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAgreCATEProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgreCATEProdActionPerformed
+        // TODO add your handling code here:
+        if(txtCateCATEProd.getText()=="")
+        {
+            JOptionPane.showMessageDialog(null, "LLenar el Campo");
+        }
+        else
+        {
+            int hecho = objCategoriaDAO.Agregar(RecuperarDatos());
+            if(hecho == 1)
+            {
+                JOptionPane.showMessageDialog(null, "Datos insertados");
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "Datos No insertados");
+            }
+            actualizarJtable();
+            Limpiar();
+        }
+    }//GEN-LAST:event_btnAgreCATEProdActionPerformed
+
+    private void btnLimpCATEProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpCATEProdActionPerformed
+        // TODO add your handling code here:
+        Limpiar();
+        botonesAgregar();
+    }//GEN-LAST:event_btnLimpCATEProdActionPerformed
+
+    private void jtblCATEProdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtblCATEProdMouseClicked
+        // TODO add your handling code here:
+        int row = jtblCATEProd.getSelectedRow();
+        System.out.println("--"+row);
+        JTable target = (JTable)evt.getSource();
+        txtIdCateCATEProd.setText(target.getValueAt(target.getSelectedRow(), 0).toString());
+        txtCateCATEProd.setText(target.getValueAt(target.getSelectedRow(), 1).toString());
+        botonesModificar();
+    }//GEN-LAST:event_jtblCATEProdMouseClicked
+
+    private void btnActuCATEProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActuCATEProdActionPerformed
+        // TODO add your handling code here:
+        if(txtCateCATEProd.getText()=="")
+        {
+            JOptionPane.showMessageDialog(null, "LLenar el Campo");
+        }
+        else
+        {
+            int hecho = objCategoriaDAO.Modificar(RecuperarDatos());
+            if(hecho == 1)
+            {
+                JOptionPane.showMessageDialog(null, "Datos Modificados");
+                botonesAgregar();
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "Datos No Modificados");
+            }
+            actualizarJtable();
+            Limpiar();
+        }        
+    }//GEN-LAST:event_btnActuCATEProdActionPerformed
+
+    private void btnElimCATEProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElimCATEProdActionPerformed
+        // TODO add your handling code here:
+       if(txtIdCateCATEProd.getText() == "")
+       {
+           JOptionPane.showMessageDialog(null, "Elegir Categoría");
+       }
+       else
+       {
+           int hecho = objCategoriaDAO.Eliminar(RecuperarDatos());
+                if(hecho == 1)
+                {
+                    JOptionPane.showMessageDialog(null, "Datos Eliminados");
+                    botonesAgregar();
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "Datos No Eliminados");
+                }           
+           actualizarJtable();
+           Limpiar();
+       }        
+    }//GEN-LAST:event_btnElimCATEProdActionPerformed
 
     /**
      * @param args the command line arguments
@@ -193,13 +376,17 @@ public class CategoriaProducto extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActuCATEProd;
     private javax.swing.JButton btnAgreCATEProd;
+    private javax.swing.JButton btnBuscCATEProd;
     private javax.swing.JButton btnElimCATEProd;
+    private javax.swing.JButton btnLimpCATEProd;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jtblCATEProd;
     private javax.swing.JLabel lblCateCATEProd;
+    private javax.swing.JLabel lblCateCATEProd1;
     private javax.swing.JPanel pnlPrinCATEProd;
     private javax.swing.JTextField txtCateCATEProd;
+    private javax.swing.JTextField txtIdCateCATEProd;
     // End of variables declaration//GEN-END:variables
 }
