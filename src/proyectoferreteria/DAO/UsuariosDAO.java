@@ -55,7 +55,103 @@ public class UsuariosDAO
         else
             JOptionPane.showMessageDialog(null,"No se pudo completar la operación","Error", JOptionPane.ERROR_MESSAGE);
     }
-        
+    
+    public void Desactivar(UsuariosBO ObjUsuario)
+    {
+       String Consulta = "";
+       if(ObjUsuario.getEstatus().equals("1"))
+       {
+          Consulta = "UPDATE empleado SET Estatus='0' Where id_empleado='"+ObjUsuario.getCodigo()+"';";
+       }
+       if(ObjUsuario.getEstatus().equals("0"))
+       {
+          Consulta = "UPDATE empleado SET Estatus='1' Where id_empleado='"+ObjUsuario.getCodigo()+"';";
+       }
+       int resultado = conn.EjecutarComandoSQL(Consulta);
+       
+       if(resultado==1)
+            JOptionPane.showMessageDialog(null,"Se ha desactivado al usuario","Información", JOptionPane.INFORMATION_MESSAGE);
+        else
+            JOptionPane.showMessageDialog(null,"No se pudo completar la operación","Error", JOptionPane.ERROR_MESSAGE);
+    }
+    
+    public DefaultTableModel BuscarDinamica(UsuariosBO datos)
+    {
+        DefaultTableModel dtm; dtm = new DefaultTableModel(
+            new Object [][] {
+            },
+            new String [] {
+                "Código", "Nombre", "Apellidos", "Usuario"
+            }
+        );  
+        try {
+            String cadenaWhere = "";
+            Boolean edo = false;
+            String Mysql = "";
+            
+            if (!"".equals(datos.getCodigo()))
+            {
+                cadenaWhere = cadenaWhere + " id_empleado='" + datos.getCodigo() + "' and";
+                edo = true;
+            }
+            if (!"".equals(datos.getNombre()))
+            {
+                cadenaWhere = cadenaWhere + " Nombre='" + datos.getNombre() + "' and";
+                edo = true;
+            }
+            if (!"".equals(datos.getApellido()))
+            {
+                cadenaWhere = cadenaWhere + " Apellido='" + datos.getApellido() + "' and";
+                edo = true;
+            }
+            if (!"".equals(datos.getCorreo()))
+            {
+                cadenaWhere = cadenaWhere + " Correo='" + datos.getCorreo() + "' and";
+                edo = true;
+            }
+            if (!"".equals(datos.getDireccion()))
+            {
+                cadenaWhere = cadenaWhere + " Direccion='" + datos.getDireccion() + "' and";
+                edo = true;
+            }
+            if (!"".equals(datos.getTelefono()))
+            {
+                cadenaWhere = cadenaWhere + " Telefono='" + datos.getTelefono() + "' and";
+                edo = true;
+            }
+            if (!"".equals(datos.getUsuario()))
+            {
+                cadenaWhere = cadenaWhere + " Usuario='" + datos.getUsuario() + "' and";
+                edo = true;
+            }
+
+            if (edo == true)
+            {
+                int numero = cadenaWhere.length() - 3;
+                cadenaWhere = " WHERE " + cadenaWhere.substring(0, numero);
+                Mysql = "SELECT * FROM empleado" + cadenaWhere;
+            }
+            PreparedStatement pstm = conn.ConectarSQLite().prepareStatement(Mysql);
+            ResultSet resultado = pstm.executeQuery();
+            
+            while(resultado.next())
+            {
+                Object[] Fila={
+                    resultado.getString(1),
+                    resultado.getString(2),
+                    resultado.getString(3),
+                    resultado.getString(8)
+                };
+                dtm.addRow(Fila);
+            }
+        conn.Desconectar();
+        return dtm;
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuariosDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
     public DefaultTableModel Llenar()//Parallenar La Tabla
     {
         DefaultTableModel dtm; dtm = new DefaultTableModel(
@@ -89,7 +185,7 @@ public class UsuariosDAO
         }        
     }
     
-    public UsuariosBO LlenarCampos(String Id)
+    public UsuariosBO LlenarCampos(String Id)//Lllena Todos los texBox, ComboBox etc
     {
         try 
         {
@@ -125,7 +221,7 @@ public class UsuariosDAO
     {
         try
         {
-            String consulta = "SELECT * FROM empleado Where Usuario = \""+objUsuarios.getUsuario()+"\" and Contrasena = \""+objUsuarios.getContrasena()+"\"";
+            String consulta = "SELECT * FROM empleado Where Usuario = \""+objUsuarios.getUsuario()+"\" and Contrasena = \""+objUsuarios.getContrasena()+"\" and Estatus = \"1\"";
             //String consulta = "SELECT * FROM usuarios Where UsuarioName = \""+objUsuarios.getUsuario()+"\" and Contraseña = \""+objUsuarios.getContaseña()+"\"";
             PreparedStatement pstm = conn.ConectarSQLite().prepareStatement(consulta);
             ResultSet resultado = pstm.executeQuery();
@@ -138,4 +234,6 @@ public class UsuariosDAO
             return null;
         }
     }
+    
+
 }
