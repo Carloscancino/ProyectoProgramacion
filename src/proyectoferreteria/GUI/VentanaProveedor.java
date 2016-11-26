@@ -19,7 +19,7 @@ public class VentanaProveedor extends javax.swing.JInternalFrame {
         DefaultTableModel dtm= new DefaultTableModel(
         new Object [][] { },
         new String [] {
-        "Código", "Nombre", "Direccion", "Email","Telefono"
+        "Código", "Nombre", "Direccion", "Email","Telefono","Estatus"
     });
     ProveedorBO ObjUsuariosBO= new ProveedorBO();
     ProveedorDAO objUsuariosDAO= new ProveedorDAO();
@@ -31,6 +31,7 @@ public class VentanaProveedor extends javax.swing.JInternalFrame {
         initComponents();
         ActualizarTabla();
         txtCodigoProve.setEnabled(false);
+        txtEstatus.setEnabled(false);
     }
 
     /**
@@ -58,6 +59,8 @@ public class VentanaProveedor extends javax.swing.JInternalFrame {
         btnLimpiarProveedor = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         txtCodigoProve = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        txtEstatus = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblProveedor = new javax.swing.JTable();
 
@@ -142,6 +145,8 @@ public class VentanaProveedor extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Codigo:");
 
+        jLabel2.setText("Estatus:");
+
         javax.swing.GroupLayout pnlPrinProveLayout = new javax.swing.GroupLayout(pnlPrinProve);
         pnlPrinProve.setLayout(pnlPrinProveLayout);
         pnlPrinProveLayout.setHorizontalGroup(
@@ -149,28 +154,42 @@ public class VentanaProveedor extends javax.swing.JInternalFrame {
             .addGroup(pnlPrinProveLayout.createSequentialGroup()
                 .addGroup(pnlPrinProveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlPrinProveLayout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addGroup(pnlPrinProveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblDireccVENProve)
-                            .addComponent(txtNombVENProve)
-                            .addComponent(lblCorreVENProve))
                         .addGroup(pnlPrinProveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlPrinProveLayout.createSequentialGroup()
-                                .addGap(9, 9, 9)
-                                .addComponent(txtCorreoProve, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlPrinProveLayout.createSequentialGroup()
-                                .addGap(10, 10, 10)
+                                .addGap(23, 23, 23)
+                                .addComponent(txtNombVENProve)
+                                .addGap(16, 16, 16))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrinProveLayout.createSequentialGroup()
+                                .addContainerGap()
                                 .addGroup(pnlPrinProveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtDireccionProve, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtNombreProve, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(41, 41, 41)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrinProveLayout.createSequentialGroup()
+                                        .addComponent(lblDireccVENProve)
+                                        .addGap(10, 10, 10))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrinProveLayout.createSequentialGroup()
+                                        .addComponent(lblCorreVENProve)
+                                        .addGap(18, 18, 18)))))
                         .addGroup(pnlPrinProveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblTelVENProve)
-                            .addComponent(jLabel1))
-                        .addGap(18, 18, 18)
+                            .addComponent(txtDireccionProve, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNombreProve, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCorreoProve, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(pnlPrinProveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlPrinProveLayout.createSequentialGroup()
+                                .addGap(41, 41, 41)
+                                .addComponent(jLabel1)
+                                .addGap(27, 27, 27))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrinProveLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pnlPrinProveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrinProveLayout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addGap(28, 28, 28))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrinProveLayout.createSequentialGroup()
+                                        .addComponent(lblTelVENProve)
+                                        .addGap(18, 18, 18)))))
                         .addGroup(pnlPrinProveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtTelefonoProve, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCodigoProve, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtCodigoProve, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtEstatus, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(pnlPrinProveLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -187,16 +206,20 @@ public class VentanaProveedor extends javax.swing.JInternalFrame {
                     .addGroup(pnlPrinProveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtNombVENProve)
                         .addComponent(txtNombreProve, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(23, 23, 23)
-                .addGroup(pnlPrinProveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDireccVENProve)
-                    .addComponent(txtDireccionProve, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblTelVENProve)
-                    .addComponent(txtTelefonoProve, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(6, 6, 6)
+                .addGap(11, 11, 11)
+                .addGroup(pnlPrinProveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrinProveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(txtEstatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrinProveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblDireccVENProve)
+                        .addComponent(txtDireccionProve, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(10, 10, 10)
                 .addGroup(pnlPrinProveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCorreoProve, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCorreVENProve))
+                    .addComponent(lblCorreVENProve)
+                    .addComponent(lblTelVENProve)
+                    .addComponent(txtTelefonoProve, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(55, 55, 55))
@@ -252,19 +275,28 @@ public class VentanaProveedor extends javax.swing.JInternalFrame {
 
     private void btnAgregarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProveedorActionPerformed
         // TODO add your handling code here:
+        if(txtNombreProve.getText().equals("")||txtDireccionProve.getText().equals("")||txtCorreoProve.getText().equals("")||txtTelefonoProve.getText().equals("")){
+            JOptionPane.showMessageDialog(null,"Llene todos los datos correctamente");
+        }
+        else{
+            txtEstatus.setText("1");
         if(objUsuariosDAO.Agregar(RecoletarDatos())==1)
         {
             JOptionPane.showMessageDialog(null,"Información Agregada");
         }
-     
+            
+        }
+
      ActualizarTabla();
      Limpiar();
     }//GEN-LAST:event_btnAgregarProveedorActionPerformed
 
     private void btnEliminarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarProveedorActionPerformed
         // TODO add your handling code here:
+         txtEstatus.setText("0");
         if(objUsuariosDAO.Eliminar(RecoletarDatos())==1)
         {
+           
             JOptionPane.showMessageDialog(null,"Información eliminada");
         }
         ActualizarTabla();
@@ -278,6 +310,7 @@ public class VentanaProveedor extends javax.swing.JInternalFrame {
 
     private void btnModificarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarProveedorActionPerformed
         // TODO add your handling code here:
+        
         if(objUsuariosDAO.Modificar(RecoletarDatos())==1)
         {
             JOptionPane.showMessageDialog(null,"Información modificada");
@@ -297,6 +330,7 @@ public class VentanaProveedor extends javax.swing.JInternalFrame {
         txtDireccionProve.setText(target.getValueAt(target.getSelectedRow(), 2).toString());
         txtCorreoProve.setText(target.getValueAt(target.getSelectedRow(), 3).toString());
         txtTelefonoProve.setText(target.getValueAt(target.getSelectedRow(), 4).toString());
+        txtEstatus.setText(target.getValueAt(target.getSelectedRow(), 5).toString());
         
         
          btnEliminarProveedor.setEnabled(true);
@@ -311,6 +345,7 @@ public class VentanaProveedor extends javax.swing.JInternalFrame {
   txtDireccionProve.setText("");
   txtCorreoProve.setText("");
   txtTelefonoProve.setText("");
+  txtEstatus.setText("");
 
   btnEliminarProveedor.setEnabled(false);
   btnModificarProveedor.setEnabled(false);
@@ -325,6 +360,7 @@ public class VentanaProveedor extends javax.swing.JInternalFrame {
         ObjUsuariosBO.setDireccion(txtDireccionProve.getText());
         ObjUsuariosBO.setEmail(txtCorreoProve.getText());
         ObjUsuariosBO.setTelefono(txtTelefonoProve.getText());
+        ObjUsuariosBO.setEstatus(txtEstatus.getText());
         
         return ObjUsuariosBO;
     }
@@ -373,6 +409,7 @@ public class VentanaProveedor extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnLimpiarProveedor;
     private javax.swing.JButton btnModificarProveedor;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCorreVENProve;
@@ -383,6 +420,7 @@ public class VentanaProveedor extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtCodigoProve;
     private javax.swing.JTextField txtCorreoProve;
     private javax.swing.JTextField txtDireccionProve;
+    private javax.swing.JTextField txtEstatus;
     private javax.swing.JLabel txtNombVENProve;
     private javax.swing.JTextField txtNombreProve;
     private javax.swing.JTextField txtTelefonoProve;

@@ -14,20 +14,20 @@ public class ProveedorDAO {
      public ProveedorDAO(){
      }
      public int Agregar(ProveedorBO objProveedor){
-         int ComandoEjecutado=objConexion.EjecutarComandoSQL("INSERT INTO proveedor(Nombre,Direccion,Email,Telefono)\n" +
-"VALUES ('"+objProveedor.getNombre()+"','"+objProveedor.getDireccion()+"','"+objProveedor.getEmail()+"','"+objProveedor.getTelefono()+"');");
+         int ComandoEjecutado=objConexion.EjecutarComandoSQL("INSERT INTO proveedor(Nombre,Direccion,Email,Telefono,Estatus)\n" +
+"VALUES ('"+objProveedor.getNombre()+"','"+objProveedor.getDireccion()+"','"+objProveedor.getEmail()+"','"+objProveedor.getTelefono()+"','"+objProveedor.getEstatus()+"');");
     objConexion.Desconectar();
     return ComandoEjecutado;
      }
      
      public int Eliminar(ProveedorBO objProveedor){
-     int ComandoEjecutado=objConexion.EjecutarComandoSQL("DELETE FROM proveedor WHERE id_proveedor='"+objProveedor.getCodigo()+"'");
+     int ComandoEjecutado=objConexion.EjecutarComandoSQL("update proveedor set Estatus='"+objProveedor.getEstatus()+"' WHERE id_proveedor='"+objProveedor.getCodigo()+"'");
      objConexion.Desconectar();
      return ComandoEjecutado;
      }
      
      public int Modificar(ProveedorBO objProveedor){
-     int ComandoEjecutado=objConexion.EjecutarComandoSQL("UPDATE proveedor SET Nombre='"+objProveedor.getNombre()+"', Direccion='"+objProveedor.getDireccion()+"',Email='"+objProveedor.getEmail()+"',Telefono='"+objProveedor.getTelefono()+"' WHERE id_proveedor="+objProveedor.getCodigo());
+     int ComandoEjecutado=objConexion.EjecutarComandoSQL("UPDATE proveedor SET Nombre='"+objProveedor.getNombre()+"', Direccion='"+objProveedor.getDireccion()+"',Email='"+objProveedor.getEmail()+"',Telefono='"+objProveedor.getTelefono()+"',Estatus='"+objProveedor.getEstatus()+"' WHERE id_proveedor='"+objProveedor.getCodigo()+"'");
      objConexion.Desconectar();    
      return ComandoEjecutado;
      }
@@ -36,7 +36,7 @@ public class ProveedorDAO {
         DefaultTableModel dtm =new DefaultTableModel(
             new Object [][] {},
             new String [] {
-                "Código", "Nombre", "Direcion", "Email","Telefono"
+                "Código", "Nombre", "Direcion", "Email","Telefono","Estatus"
             }
         ){ @Override
     public boolean isCellEditable(int row, int column) {
@@ -46,7 +46,7 @@ public class ProveedorDAO {
          
         try{
          Conexion objConexion= new Conexion();
-         ResultSet  Resultado=objConexion.EjecutarSentenciaSQL("SELECT * FROM proveedor");
+         ResultSet  Resultado=objConexion.EjecutarSentenciaSQL("SELECT * FROM proveedor where Estatus='1'");
          while(Resultado.next()){
         // Recuperar Datos de la GUI
         Object[] Fila={
@@ -55,6 +55,7 @@ public class ProveedorDAO {
           Resultado.getString(3), 
           Resultado.getString(4),
           Resultado.getString(5),
+          Resultado.getString(6)
         };
         // Agregar Datos al JTable
         dtm.addRow(Fila);

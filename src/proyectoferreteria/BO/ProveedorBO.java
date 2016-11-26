@@ -9,7 +9,15 @@ public class ProveedorBO {
    public String Direccion;
    public String Email;
    public String Telefono;
-   
+   public String Estatus;
+
+    public String getEstatus() {
+        return Estatus;
+    }
+
+    public void setEstatus(String Estatus) {
+        this.Estatus = Estatus;
+    }
 
     public String getCodigo() {
         return Codigo;
