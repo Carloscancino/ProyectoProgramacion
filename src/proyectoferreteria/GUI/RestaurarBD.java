@@ -5,6 +5,12 @@
  */
 package proyectoferreteria.GUI;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Emmanuel
@@ -28,40 +34,34 @@ public class RestaurarBD extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         pnlRestBD = new javax.swing.JPanel();
-        lblUserRestBD = new javax.swing.JLabel();
-        txtUserRestBD = new javax.swing.JTextField();
-        lblContrRestBD = new javax.swing.JLabel();
         lblRespalRestBD = new javax.swing.JLabel();
         txtRespalRestBD = new javax.swing.JTextField();
-        btnSeleccRestBD = new javax.swing.JButton();
         btnGeneRestBD = new javax.swing.JButton();
-        btnCancRestBD = new javax.swing.JButton();
-        txtContrRestBD = new javax.swing.JPasswordField();
+        lblRespalRestBD1 = new javax.swing.JLabel();
+        txtRespalRestBD1 = new javax.swing.JTextField();
 
         setClosable(true);
         setTitle("Restauración de la base de datos");
 
         pnlRestBD.setBorder(javax.swing.BorderFactory.createTitledBorder("Información del Restauración"));
 
-        lblUserRestBD.setText("Usuario:");
-
-        txtUserRestBD.setText("root");
-
-        lblContrRestBD.setText("Contraseña:");
-
-        lblRespalRestBD.setText("Respaldar de:");
+        lblRespalRestBD.setText("Restaurar en:");
 
         txtRespalRestBD.setEditable(false);
-
-        btnSeleccRestBD.setText("Seleccionar");
+        txtRespalRestBD.setText("ProyectoProgramacion");
 
         btnGeneRestBD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bdrtBD.png"))); // NOI18N
-        btnGeneRestBD.setText("Generar");
+        btnGeneRestBD.setText("Restaurar");
+        btnGeneRestBD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGeneRestBDActionPerformed(evt);
+            }
+        });
 
-        btnCancRestBD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancelar.png"))); // NOI18N
-        btnCancRestBD.setText("Cancelar");
+        lblRespalRestBD1.setText("Base de datos");
 
-        txtContrRestBD.setText("jPasswordField1");
+        txtRespalRestBD1.setEditable(false);
+        txtRespalRestBD1.setText("Ferreteria");
 
         javax.swing.GroupLayout pnlRestBDLayout = new javax.swing.GroupLayout(pnlRestBD);
         pnlRestBD.setLayout(pnlRestBDLayout);
@@ -70,53 +70,35 @@ public class RestaurarBD extends javax.swing.JInternalFrame {
             .addGroup(pnlRestBDLayout.createSequentialGroup()
                 .addGroup(pnlRestBDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlRestBDLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
+                        .addGap(154, 154, 154)
+                        .addComponent(btnGeneRestBD, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlRestBDLayout.createSequentialGroup()
+                        .addGap(21, 21, 21)
                         .addGroup(pnlRestBDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlRestBDLayout.createSequentialGroup()
-                                .addComponent(lblRespalRestBD)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtRespalRestBD, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblRespalRestBD1)
                                 .addGap(18, 18, 18)
-                                .addComponent(btnSeleccRestBD))
+                                .addComponent(txtRespalRestBD1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(pnlRestBDLayout.createSequentialGroup()
-                                .addGroup(pnlRestBDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblUserRestBD)
-                                    .addComponent(lblContrRestBD))
-                                .addGroup(pnlRestBDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(pnlRestBDLayout.createSequentialGroup()
-                                        .addGap(16, 16, 16)
-                                        .addComponent(txtUserRestBD, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(pnlRestBDLayout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtContrRestBD, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                    .addGroup(pnlRestBDLayout.createSequentialGroup()
-                        .addGap(109, 109, 109)
-                        .addComponent(btnGeneRestBD, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(70, 70, 70)
-                        .addComponent(btnCancRestBD, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 17, Short.MAX_VALUE))
+                                .addComponent(lblRespalRestBD)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtRespalRestBD, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(112, Short.MAX_VALUE))
         );
         pnlRestBDLayout.setVerticalGroup(
             pnlRestBDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlRestBDLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(23, 23, 23)
                 .addGroup(pnlRestBDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblUserRestBD)
-                    .addComponent(txtUserRestBD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlRestBDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblContrRestBD)
-                    .addComponent(txtContrRestBD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(lblRespalRestBD1)
+                    .addComponent(txtRespalRestBD1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addGroup(pnlRestBDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblRespalRestBD)
-                    .addComponent(txtRespalRestBD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSeleccRestBD))
-                .addGap(18, 18, 18)
-                .addGroup(pnlRestBDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnGeneRestBD)
-                    .addComponent(btnCancRestBD, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txtRespalRestBD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnGeneRestBD, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -138,6 +120,18 @@ public class RestaurarBD extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnGeneRestBDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGeneRestBDActionPerformed
+        // TODO add your handling code here:
+        try{
+           Path o= Paths.get("RespaldoBD\\Ferreteria.s3db");
+           Path d=Paths.get("Ferreteria.s3db");
+           Files.copy(o,d,StandardCopyOption.REPLACE_EXISTING);
+           JOptionPane.showMessageDialog(null,"La restauracion fue realizada exitosamente");
+       }catch(Exception e){
+           JOptionPane.showMessageDialog(null,"Error: " + e);
+       } 
+    }//GEN-LAST:event_btnGeneRestBDActionPerformed
 
     /**
      * @param args the command line arguments
@@ -175,15 +169,11 @@ public class RestaurarBD extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCancRestBD;
     private javax.swing.JButton btnGeneRestBD;
-    private javax.swing.JButton btnSeleccRestBD;
-    private javax.swing.JLabel lblContrRestBD;
     private javax.swing.JLabel lblRespalRestBD;
-    private javax.swing.JLabel lblUserRestBD;
+    private javax.swing.JLabel lblRespalRestBD1;
     private javax.swing.JPanel pnlRestBD;
-    private javax.swing.JPasswordField txtContrRestBD;
     private javax.swing.JTextField txtRespalRestBD;
-    private javax.swing.JTextField txtUserRestBD;
+    private javax.swing.JTextField txtRespalRestBD1;
     // End of variables declaration//GEN-END:variables
 }

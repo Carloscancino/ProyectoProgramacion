@@ -9,16 +9,16 @@ public class ProductoBO {
     private String Nombre;
     private String Descripcion;
     private String Marca;
-    private int Stock;
+    private String Stock;
     private String Unidad;
-    private double Precio_compra;
-    private double Precio_Venta;
-    private double Utilidad;
-    private int Descuento;
+    private String Precio_compra;
+    private String Precio_Venta;
+    private String Utilidad;
+    private String Descuento;
     private Date Fech_ini_Desc;
     private Date Fech_fin_Desc;
     private byte [] Imagen;
-    private double IVA;
+    private String IVA;
     private byte[] Codigo_barras;
     private String id_categoria;
     private String id_proveedor;
@@ -64,11 +64,11 @@ public class ProductoBO {
         this.Marca = Marca;
     }
 
-    public int getStock() {
+    public String getStock() {
         return Stock;
     }
 
-    public void setStock(int Stock) {
+    public void setStock(String Stock) {
         this.Stock = Stock;
     }
 
@@ -80,35 +80,35 @@ public class ProductoBO {
         this.Unidad = Unidad;
     }
 
-    public double getPrecio_compra() {
+    public String getPrecio_compra() {
         return Precio_compra;
     }
 
-    public void setPrecio_compra(double Precio_compra) {
+    public void setPrecio_compra(String Precio_compra) {
         this.Precio_compra = Precio_compra;
     }
 
-    public double getPrecio_Venta() {
+    public String getPrecio_Venta() {
         return Precio_Venta;
     }
 
-    public void setPrecio_Venta(double Precio_Venta) {
+    public void setPrecio_Venta(String Precio_Venta) {
         this.Precio_Venta = Precio_Venta;
     }
 
-    public double getUtilidad() {
+    public String getUtilidad() {
         return Utilidad;
     }
 
-    public void setUtilidad(double Utilidad) {
+    public void setUtilidad(String Utilidad) {
         this.Utilidad = Utilidad;
     }
 
-    public int getDescuento() {
+    public String getDescuento() {
         return Descuento;
     }
 
-    public void setDescuento(int Descuento) {
+    public void setDescuento(String Descuento) {
         this.Descuento = Descuento;
     }
 
@@ -136,11 +136,11 @@ public class ProductoBO {
         this.Imagen = Imagen;
     }
 
-    public double getIVA() {
+    public String getIVA() {
         return IVA;
     }
 
-    public void setIVA(double IVA) {
+    public void setIVA(String IVA) {
         this.IVA = IVA;
     }
 
@@ -174,5 +174,6 @@ public class ProductoBO {
 
     public void setEstatus(boolean estatus) {
         this.estatus = estatus;
-    }    
+    }
+        
 }

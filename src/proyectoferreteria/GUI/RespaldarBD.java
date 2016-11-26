@@ -22,7 +22,7 @@ public class RespaldarBD extends javax.swing.JInternalFrame {
      */
     public RespaldarBD() {
         initComponents();
-        txtBDRespBD.setEnabled(false);
+        
     }
 
     /**
@@ -36,10 +36,10 @@ public class RespaldarBD extends javax.swing.JInternalFrame {
 
         pnlRespBD = new javax.swing.JPanel();
         lblBDRespBD = new javax.swing.JLabel();
-        txtBDRespBD = new javax.swing.JTextField();
         lblRespalRespBD = new javax.swing.JLabel();
         txtRespalRespBD = new javax.swing.JTextField();
         btnGeneRespBD = new javax.swing.JButton();
+        txtRespalRespBD1 = new javax.swing.JTextField();
 
         setClosable(true);
         setTitle("Backup");
@@ -48,12 +48,10 @@ public class RespaldarBD extends javax.swing.JInternalFrame {
 
         lblBDRespBD.setText("Base de datos:");
 
-        txtBDRespBD.setText("Ferreteria");
-
         lblRespalRespBD.setText("Respaldar en:");
 
         txtRespalRespBD.setEditable(false);
-        txtRespalRespBD.setText("Escritorio");
+        txtRespalRespBD.setText("RespaldoBD");
 
         btnGeneRespBD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bdrpBD.png"))); // NOI18N
         btnGeneRespBD.setText("Generar");
@@ -62,6 +60,9 @@ public class RespaldarBD extends javax.swing.JInternalFrame {
                 btnGeneRespBDActionPerformed(evt);
             }
         });
+
+        txtRespalRespBD1.setEditable(false);
+        txtRespalRespBD1.setText("Ferreteria");
 
         javax.swing.GroupLayout pnlRespBDLayout = new javax.swing.GroupLayout(pnlRespBD);
         pnlRespBD.setLayout(pnlRespBDLayout);
@@ -72,17 +73,18 @@ public class RespaldarBD extends javax.swing.JInternalFrame {
                     .addGroup(pnlRespBDLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(lblBDRespBD)
-                        .addGap(15, 15, 15)
-                        .addComponent(txtBDRespBD, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtRespalRespBD1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlRespBDLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(lblRespalRespBD)
                         .addGap(18, 18, 18)
-                        .addComponent(txtRespalRespBD, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlRespBDLayout.createSequentialGroup()
-                        .addGap(118, 118, 118)
-                        .addComponent(btnGeneRespBD, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtRespalRespBD, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 78, Short.MAX_VALUE))
+            .addGroup(pnlRespBDLayout.createSequentialGroup()
+                .addGap(131, 131, 131)
+                .addComponent(btnGeneRespBD, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlRespBDLayout.setVerticalGroup(
             pnlRespBDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -92,7 +94,7 @@ public class RespaldarBD extends javax.swing.JInternalFrame {
                     .addGroup(pnlRespBDLayout.createSequentialGroup()
                         .addGroup(pnlRespBDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblBDRespBD)
-                            .addComponent(txtBDRespBD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtRespalRespBD1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(32, 32, 32))
                     .addGroup(pnlRespBDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtRespalRespBD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -125,8 +127,8 @@ public class RespaldarBD extends javax.swing.JInternalFrame {
     private void btnGeneRespBDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGeneRespBDActionPerformed
         // TODO add your handling code here:
         try{
-           Path o= Paths.get("C:\\Users\\joni_\\OneDrive\\Documentos\\Ferreteria.s3db");
-           Path d=Paths.get("C:\\Users\\joni_\\Desktop\\Ferreteria.s3db");
+           Path o= Paths.get("Ferreteria.s3db");
+           Path d=Paths.get("RespaldoBD\\Ferreteria.s3db");
            Files.copy(o,d,StandardCopyOption.REPLACE_EXISTING);
            JOptionPane.showMessageDialog(null,"El backup fue realizado exitosamente");
        }catch(Exception e){
@@ -174,7 +176,7 @@ public class RespaldarBD extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblBDRespBD;
     private javax.swing.JLabel lblRespalRespBD;
     private javax.swing.JPanel pnlRespBD;
-    private javax.swing.JTextField txtBDRespBD;
     private javax.swing.JTextField txtRespalRespBD;
+    private javax.swing.JTextField txtRespalRespBD1;
     // End of variables declaration//GEN-END:variables
 }

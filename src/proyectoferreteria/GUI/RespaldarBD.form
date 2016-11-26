@@ -58,8 +58,8 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="lblBDRespBD" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                          <Component id="txtBDRespBD" min="-2" pref="136" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="txtRespalRespBD1" min="-2" pref="226" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
@@ -67,12 +67,13 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="txtRespalRespBD" min="-2" pref="226" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="118" max="-2" attributes="0"/>
-                          <Component id="btnGeneRespBD" min="-2" pref="126" max="-2" attributes="0"/>
-                      </Group>
                   </Group>
                   <EmptySpace min="0" pref="78" max="32767" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="131" max="-2" attributes="0"/>
+                  <Component id="btnGeneRespBD" min="-2" pref="126" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -84,7 +85,7 @@
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="lblBDRespBD" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtBDRespBD" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtRespalRespBD1" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                       </Group>
@@ -106,11 +107,6 @@
             <Property name="text" type="java.lang.String" value="Base de datos:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtBDRespBD">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Ferreteria"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JLabel" name="lblRespalRespBD">
           <Properties>
             <Property name="text" type="java.lang.String" value="Respaldar en:"/>
@@ -119,7 +115,7 @@
         <Component class="javax.swing.JTextField" name="txtRespalRespBD">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
-            <Property name="text" type="java.lang.String" value="Escritorio"/>
+            <Property name="text" type="java.lang.String" value="RespaldoBD"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnGeneRespBD">
@@ -132,6 +128,12 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGeneRespBDActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JTextField" name="txtRespalRespBD1">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+            <Property name="text" type="java.lang.String" value="Ferreteria"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>

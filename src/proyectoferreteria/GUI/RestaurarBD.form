@@ -56,102 +56,59 @@
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="154" max="-2" attributes="0"/>
+                          <Component id="btnGeneRestBD" min="-2" pref="139" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <Component id="lblRespalRestBD" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="txtRespalRestBD" min="-2" pref="226" max="-2" attributes="0"/>
+                                  <Component id="lblRespalRestBD1" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="btnSeleccRestBD" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtRespalRestBD1" min="-2" pref="226" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="lblUserRestBD" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblContrRestBD" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" attributes="0">
-                                          <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-                                          <Component id="txtUserRestBD" min="-2" pref="136" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="txtContrRestBD" min="-2" pref="136" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
+                                  <Component id="lblRespalRestBD" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="txtRespalRestBD" min="-2" pref="226" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="109" max="-2" attributes="0"/>
-                          <Component id="btnGeneRestBD" min="-2" pref="107" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
-                          <Component id="btnCancRestBD" min="-2" pref="109" max="-2" attributes="0"/>
-                      </Group>
                   </Group>
-                  <EmptySpace min="0" pref="17" max="32767" attributes="0"/>
+                  <EmptySpace pref="112" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lblUserRestBD" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtUserRestBD" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblRespalRestBD1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtRespalRestBD1" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="lblContrRestBD" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtContrRestBD" alignment="0" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace pref="27" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lblRespalRestBD" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtRespalRestBD" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnSeleccRestBD" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="btnGeneRestBD" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnCancRestBD" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="btnGeneRestBD" min="-2" pref="49" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="lblUserRestBD">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Usuario:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="txtUserRestBD">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="root"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="lblContrRestBD">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Contrase&#xf1;a:"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JLabel" name="lblRespalRestBD">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Respaldar de:"/>
+            <Property name="text" type="java.lang.String" value="Restaurar en:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtRespalRestBD">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="btnSeleccRestBD">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Seleccionar"/>
+            <Property name="text" type="java.lang.String" value="ProyectoProgramacion"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnGeneRestBD">
@@ -159,20 +116,21 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/Imagenes/bdrtBD.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Generar"/>
+            <Property name="text" type="java.lang.String" value="Restaurar"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGeneRestBDActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblRespalRestBD1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Base de datos"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="btnCancRestBD">
+        <Component class="javax.swing.JTextField" name="txtRespalRestBD1">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Imagenes/cancelar.png"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Cancelar"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JPasswordField" name="txtContrRestBD">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jPasswordField1"/>
+            <Property name="editable" type="boolean" value="false"/>
+            <Property name="text" type="java.lang.String" value="Ferreteria"/>
           </Properties>
         </Component>
       </SubComponents>
