@@ -29,8 +29,17 @@ public class Conexion
         return this.conectar;
     }
     
-    public void Desconectar(){
-        this.conectar=null;
+    public void Desconectar()
+    {
+        try
+        {
+            this.conectar.close();
+            System.out.println("Desconectado");
+        }
+        catch(SQLException e)
+        {
+            System.out.println(e);
+        }
     }
     
     public int EjecutarComandoSQL(String Sentencia){
@@ -47,7 +56,7 @@ public class Conexion
     public ResultSet EjecutarSentenciaSQL(String Sentencia){
      try {
          PreparedStatement pstm=ConectarSQLite().prepareStatement(Sentencia);
-         pstm.execute();
+          pstm.execute();
           ResultSet Resultado=pstm.executeQuery();
            return Resultado;
         }catch (SQLException e) {
@@ -55,17 +64,35 @@ public class Conexion
          return null;   
         }
     }
-    
-    //MySQL
-    public Connection conexion()
-    {  
-        try {       
-            Class.forName("com.mysql.jdbc.Driver");          
-            conectar=DriverManager.getConnection("jdbc:mysql://localhost/escuela","root","");
+
+    public int EjecutarComandoSQLImagen(String Sentencia, byte[] imagen)
+    {
+        try
+        {
+            PreparedStatement pstm = ConectarSQLite().prepareStatement(Sentencia);
+            pstm.setBytes(1, imagen);
+            pstm.execute();
+            System.out.println("Ejecución exitosa");
+            Desconectar();
+            return 1;
         }
-        catch (ClassNotFoundException | SQLException e) {       
-            JOptionPane.showMessageDialog(null,"Error "+e.getMessage());      
-        }     
-        return conectar;
+        catch(SQLException e)
+        {
+            System.out.println(e);
+            return 0;
+        }
     }
+    
+//    //MySQL
+//    public Connection conexion()
+//    {  
+//        try {       
+//            Class.forName("com.mysql.jdbc.Driver");          
+//            conectar=DriverManager.getConnection("jdbc:mysql://localhost/escuela","root","");
+//        }
+//        catch (ClassNotFoundException | SQLException e) {       
+//            JOptionPane.showMessageDialog(null,"Error "+e.getMessage());      
+//        }     
+//        return conectar;
+//    }
 }

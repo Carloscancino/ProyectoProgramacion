@@ -121,7 +121,7 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
         UsuariosBO objUsuari = new UsuariosBO();
         objUsuari.setUsuario(txtUsuLogi.getText());
-        objUsuari.setContaseña(txtContraLogi.getText());
+        objUsuari.setContrasena(txtContraLogi.getText());
         String Usuario = "";
         String Coontraseña = "";
 
@@ -133,7 +133,7 @@ public class Login extends javax.swing.JFrame {
                 Usuario = resultado.getString(8);
                 Coontraseña = resultado.getString(9);
             }
-            if(objUsuari.getUsuario().equals(Usuario)&& objUsuari.getContaseña().equals(Coontraseña))
+            if(objUsuari.getUsuario().equals(Usuario)&& objUsuari.getContrasena().equals(Coontraseña))
             {
                 PaginaPrincipal v = new PaginaPrincipal();
                 v.setVisible(true);
