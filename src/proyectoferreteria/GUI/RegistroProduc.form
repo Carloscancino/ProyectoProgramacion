@@ -52,17 +52,16 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                      <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane1" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="jScrollPane1" max="32767" attributes="0"/>
+                              <Component id="jblBuscarProduc1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jblBuscarProduc1" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace min="0" pref="10" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="24" max="32767" attributes="0"/>
               </Group>
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -71,14 +70,14 @@
                           <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="103" max="-2" attributes="0"/>
-                          <Component id="btnNewProd" min="-2" pref="108" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
                           <Component id="btnGuarProd" min="-2" pref="104" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
                           <Component id="btnModifProd" min="-2" pref="110" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                           <Component id="btnCancelProd" min="-2" pref="110" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                          <Component id="btnNewProd" min="-2" pref="108" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
@@ -259,12 +258,14 @@
                                   <Component id="lblImaProd1" min="-2" pref="119" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="lblProvProd1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtProveREPro" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="btnCargarREProd" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtId_Cod_Barr" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="btnCargarCodBarr" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="lblProvProd1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="txtProveREPro" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="txtId_Cod_Barr" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="btnCargarCodBarr" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
                       </Group>
@@ -546,14 +547,22 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtPreComREPro">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="0"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtPreComREProActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="txtPreVentREPro">
               <Properties>
+                <Property name="text" type="java.lang.String" value="0"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtUtilREPro">
               <Properties>
+                <Property name="text" type="java.lang.String" value="0"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
@@ -585,15 +594,24 @@
               </Properties>
             </Component>
             <Component class="com.toedter.calendar.JDateChooser" name="calenDeREPro">
+              <Properties>
+                <Property name="dateFormatString" type="java.lang.String" value="yyyy/MM/dd"/>
+              </Properties>
             </Component>
             <Component class="com.toedter.calendar.JDateChooser" name="calenAREPro">
+              <Properties>
+                <Property name="dateFormatString" type="java.lang.String" value="yyyy/MM/dd"/>
+              </Properties>
             </Component>
             <Component class="javax.swing.JSpinner" name="txtIvaREPro">
               <Properties>
                 <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-                  <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
+                  <SpinnerModel initial="15" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="txtIvaREProStateChanged"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -608,7 +626,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/Imagenes/nuevo.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Nuevo"/>
+            <Property name="text" type="java.lang.String" value="Limpiar"/>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[95, 25]"/>
             </Property>
@@ -639,6 +657,9 @@
               <Dimension value="[95, 25]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGuarProdActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnModifProd">
           <Properties>
@@ -653,6 +674,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Modificar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnModifProdActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnCancelProd">
           <Properties>
@@ -665,8 +689,11 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/Imagenes/cancelar.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Cancelar"/>
+            <Property name="text" type="java.lang.String" value="Eliminar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelProdActionPerformed"/>
+          </Events>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane1">
           <AuxValues>
@@ -681,6 +708,9 @@
                   <Connection code="new javax.swing.table.DefaultTableModel(&#xa;    new Object [][] {&#xa;    },&#xa;    new String [] {&#xa;        &quot;C&#xf3;digo&quot;, &quot;Nombre&quot;&#xa;    }&#xa;)" type="code"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTableProductosMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

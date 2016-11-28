@@ -5,16 +5,30 @@
  */
 package proyectoferreteria.GUI;
 
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import static javax.print.attribute.Size2DSyntax.MM;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
+import jbarcodebean.JBarcodeBean;
+import net.sourceforge.jbarcodebean.model.Interleaved25;
 import proyectoferreteria.BO.ProductoBO;
 import proyectoferreteria.DAO.ProductoDAO;
 
@@ -24,11 +38,11 @@ import proyectoferreteria.DAO.ProductoDAO;
  */
 public class RegistroProduc extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form Ventas
-     */
     ProductoDAO objProductoDAO = new ProductoDAO();
     ProductoBO objProductoBO = new ProductoBO();
+    byte[] imagenCodeBar = null;
+    JFileChooser SelectorImagenes;
+    String rutaImagem="";
     DefaultTableModel dtm =new DefaultTableModel(
         new Object [][] {},
         new String [] {
@@ -37,6 +51,7 @@ public class RegistroProduc extends javax.swing.JInternalFrame {
     );    
     public RegistroProduc() {
         initComponents();
+        botonagregar();
         actualizarJtable();
        // txtFechProd.setText(fechaactual());
         //setLocation(0, 90);
@@ -67,25 +82,48 @@ public class RegistroProduc extends javax.swing.JInternalFrame {
     }
     public ProductoBO RecuperarDatos()
     {
+        String fecha_inicio="";
+        String fecha_fin ="";
+        if(!spinDescREProd.getValue().toString().equals("0"))
+        {
+            fecha_inicio = new SimpleDateFormat("yyyy/MM/dd").format(calenDeREPro.getDate());
+            objProductoBO.setFech_ini_Desc(fecha_inicio);
+            fecha_fin = new SimpleDateFormat("yyyy/MM/dd").format(calenAREPro.getDate());
+            objProductoBO.setFech_fin_Desc(fecha_fin);            
+        }  
         objProductoBO.setCodigo(txtCodREProd.getText());
         objProductoBO.setId_Codigo_barra(txtId_Cod_Barr.getText());
         objProductoBO.setNombre(txtNomREProd.getText());
         objProductoBO.setDescripcion(txtDescProd.getText());
         objProductoBO.setMarca(txtMarcREPro.getText());
         objProductoBO.setStock(txtCantREPro.getValue().toString());
-        objProductoBO.setUnidad((String) cbxUnidREPro.getSelectedItem());
+        objProductoBO.setUnidad(""+cbxUnidREPro.getSelectedIndex());
         objProductoBO.setPrecio_compra(txtPreComREPro.getText());
         objProductoBO.setPrecio_Venta(txtPreVentREPro.getText());
         objProductoBO.setUtilidad(txtUtilREPro.getText());
-        objProductoBO.setDescuento(txtDescProd.getText());
-        objProductoBO.setFech_ini_Desc(calenDeREPro.getDate());
-        objProductoBO.setFech_fin_Desc(calenAREPro.getDate());
+        objProductoBO.setDescuento(spinDescREProd.getValue().toString());
+        //Fechas
         objProductoBO.setIVA(txtIvaREPro.getValue().toString());
         objProductoBO.setId_categoria(""+cbxCateREPro.getSelectedIndex());
         objProductoBO.setId_proveedor(txtProveREPro.getText());     
-        JOptionPane.showMessageDialog(null, objProductoBO.getId_Codigo_barra());
+
         return objProductoBO;
     }     
+    public Date convertToFecha(String strFecha)
+    {        
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+            Date date; 
+            date = formatter.parse(strFecha);
+            System.out.println(date);
+            System.out.println(formatter.format(date));
+            return date;
+        } catch (ParseException ex) {
+            Logger.getLogger(RegistroProduc.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        
+    }
     
     public void Limpiar()
     {
@@ -106,6 +144,94 @@ public class RegistroProduc extends javax.swing.JInternalFrame {
         cbxCateREPro.setSelectedIndex(0);
         txtProveREPro.setText("");
     }
+    public void botonagregar()
+    {
+        btnGuarProd.setEnabled(true);
+        btnModifProd.setEnabled(false);
+        btnCancelProd.setEnabled(false);
+    }
+    public void botonModificar()
+    {
+        btnGuarProd.setEnabled(false);
+        btnModifProd.setEnabled(true);
+        btnCancelProd.setEnabled(true);
+    }    
+    public void ActualizarPrecios()
+    {
+        DecimalFormat decimales = new DecimalFormat("0.##");
+        int iva = Integer.parseInt(txtIvaREPro.getValue().toString());
+        double precioCompra = Double.parseDouble(txtPreComREPro.getText());
+        double precioDeLaVenta = Double.parseDouble(decimales.format(precioCompra + ((precioCompra/100)*iva)));
+        String preioDeLaUtilidad = decimales.format((precioDeLaVenta-precioCompra));
+        txtPreVentREPro.setText(""+precioDeLaVenta);
+        txtUtilREPro.setText(preioDeLaUtilidad);
+    }
+    public void generarCodeBar()
+    {
+        lblImaProd.setIcon(null);
+        JBarcodeBean barcode = new JBarcodeBean();
+        // nuestro tipo de codigo de barra
+        barcode.setCodeType(new Interleaved25());
+        //barcode.setCodeType(new Code39());
+
+        // nuestro valor a codificar y algunas configuraciones mas
+        barcode.setCode(txtId_Cod_Barr.getText());
+        barcode.setCheckDigit(true);
+        BufferedImage bufferedImage = barcode.draw(new BufferedImage(lblImaProd.getWidth(), lblImaProd.getHeight(), BufferedImage.TYPE_INT_RGB));
+        ImageIcon imageIcon = new ImageIcon(bufferedImage);
+        //ImageIcon ImagenP=new ImageIcon(((bufferedImage).getImage()).getScaledInstance(lblImagen.getWidth(),lblImagen.getHeight(), java.awt.Image.SCALE_SMOOTH));
+        lblImaProd.setIcon(imageIcon);
+        imagenCodeBar = imageToByteArray(bufferedImage);
+    }
+    static byte[] imageToByteArray(BufferedImage image) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        try {
+            ImageIO.write(image, "png", stream);
+        } catch(IOException e) {
+            // This *shouldn't* happen with a ByteArrayOutputStream, but if it
+            // somehow does happen, then we don't want to just ignore it
+            throw new RuntimeException(e);
+        }
+        return stream.toByteArray();
+        // ByteArrayOutputStreams don't need to be closed (the documentation says so)
+    }
+
+    public void SeleccionarImagen(JLabel lblImagen)
+    {   
+        SelectorImagenes= new JFileChooser();
+        if(SelectorImagenes.showOpenDialog(null)==JFileChooser.APPROVE_OPTION)
+        {
+          File Archivo= SelectorImagenes.getSelectedFile();
+          String RutaArchivo= Archivo.getAbsolutePath();
+          rutaImagem = Archivo.getPath();
+          ImageIcon ImagenP=new ImageIcon(((new ImageIcon(RutaArchivo)).getImage()).getScaledInstance(lblImagen.getWidth(),lblImagen.getHeight(), java.awt.Image.SCALE_SMOOTH));
+          lblImagen.setIcon(ImagenP);
+          System.out.println("Nombre Imagen:"+Archivo.getName());        
+        }    
+    }
+    
+    public byte[] obtenerBytes(String ruta)
+    {
+        try
+        {
+            File imagen = new File(ruta);
+            FileInputStream fis = new FileInputStream(imagen);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            byte[] buf = new byte[1024];
+            for(int i; (i=fis.read(buf))!=-1;)
+            {
+                bos.write(buf,0,i);
+            }
+            byte[] mapaBits = bos.toByteArray();
+            return mapaBits;
+        }
+        catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return null;
+    }    
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -328,12 +454,13 @@ public class RegistroProduc extends javax.swing.JInternalFrame {
                                 .addComponent(lblProvProd2))
                             .addComponent(lblImaProd1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblProvProd1)
-                            .addComponent(txtProveREPro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnCargarREProd)
-                            .addComponent(txtId_Cod_Barr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnCargarCodBarr))))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(lblProvProd1)
+                                .addComponent(txtProveREPro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtId_Cod_Barr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnCargarCodBarr)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -345,8 +472,17 @@ public class RegistroProduc extends javax.swing.JInternalFrame {
 
         lblUtilProd.setText("Utilidad %:");
 
+        txtPreComREPro.setText("0");
+        txtPreComREPro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPreComREProActionPerformed(evt);
+            }
+        });
+
+        txtPreVentREPro.setText("0");
         txtPreVentREPro.setEnabled(false);
 
+        txtUtilREPro.setText("0");
         txtUtilREPro.setEnabled(false);
 
         lblIvaProd.setText("IVA %:");
@@ -359,7 +495,16 @@ public class RegistroProduc extends javax.swing.JInternalFrame {
 
         spinDescREProd.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
 
-        txtIvaREPro.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+        calenDeREPro.setDateFormatString("yyyy/MM/dd");
+
+        calenAREPro.setDateFormatString("yyyy/MM/dd");
+
+        txtIvaREPro.setModel(new javax.swing.SpinnerNumberModel(15, 0, null, 1));
+        txtIvaREPro.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                txtIvaREProStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -434,7 +579,7 @@ public class RegistroProduc extends javax.swing.JInternalFrame {
         btnNewProd.setBackground(new java.awt.Color(95, 186, 125));
         btnNewProd.setForeground(new java.awt.Color(255, 255, 255));
         btnNewProd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/nuevo.png"))); // NOI18N
-        btnNewProd.setText("Nuevo");
+        btnNewProd.setText("Limpiar");
         btnNewProd.setMaximumSize(new java.awt.Dimension(95, 25));
         btnNewProd.setMinimumSize(new java.awt.Dimension(95, 25));
         btnNewProd.addActionListener(new java.awt.event.ActionListener() {
@@ -449,16 +594,31 @@ public class RegistroProduc extends javax.swing.JInternalFrame {
         btnGuarProd.setText("Guardar");
         btnGuarProd.setMaximumSize(new java.awt.Dimension(95, 25));
         btnGuarProd.setMinimumSize(new java.awt.Dimension(95, 25));
+        btnGuarProd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuarProdActionPerformed(evt);
+            }
+        });
 
         btnModifProd.setBackground(new java.awt.Color(95, 186, 125));
         btnModifProd.setForeground(new java.awt.Color(255, 255, 255));
         btnModifProd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/modificar.png"))); // NOI18N
         btnModifProd.setText("Modificar");
+        btnModifProd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModifProdActionPerformed(evt);
+            }
+        });
 
         btnCancelProd.setBackground(new java.awt.Color(95, 186, 125));
         btnCancelProd.setForeground(new java.awt.Color(255, 255, 255));
         btnCancelProd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancelar.png"))); // NOI18N
-        btnCancelProd.setText("Cancelar");
+        btnCancelProd.setText("Eliminar");
+        btnCancelProd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelProdActionPerformed(evt);
+            }
+        });
 
         jTableProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -467,6 +627,11 @@ public class RegistroProduc extends javax.swing.JInternalFrame {
                 "Código", "Nombre"
             }
         ));
+        jTableProductos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableProductosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableProductos);
 
         javax.swing.GroupLayout pnlRegistrarProducLayout = new javax.swing.GroupLayout(pnlRegistrarProduc);
@@ -475,28 +640,27 @@ public class RegistroProduc extends javax.swing.JInternalFrame {
             pnlRegistrarProducLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlRegistrarProducLayout.createSequentialGroup()
                 .addGroup(pnlRegistrarProducLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlRegistrarProducLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlRegistrarProducLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jblBuscarProduc1))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 10, Short.MAX_VALUE))
+                        .addGroup(pnlRegistrarProducLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1)
+                            .addComponent(jblBuscarProduc1, javax.swing.GroupLayout.Alignment.LEADING))))
+                .addGap(0, 24, Short.MAX_VALUE))
             .addGroup(pnlRegistrarProducLayout.createSequentialGroup()
                 .addGroup(pnlRegistrarProducLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlRegistrarProducLayout.createSequentialGroup()
                         .addGap(33, 33, 33)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlRegistrarProducLayout.createSequentialGroup()
-                        .addGap(103, 103, 103)
-                        .addComponent(btnNewProd, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)
+                        .addGap(76, 76, 76)
                         .addComponent(btnGuarProd, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)
+                        .addGap(46, 46, 46)
                         .addComponent(btnModifProd, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
-                        .addComponent(btnCancelProd, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(36, 36, 36)
+                        .addComponent(btnCancelProd, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50)
+                        .addComponent(btnNewProd, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlRegistrarProducLayout.setVerticalGroup(
@@ -541,32 +705,98 @@ public class RegistroProduc extends javax.swing.JInternalFrame {
 
     private void btnCargarCodBarrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarCodBarrActionPerformed
         // TODO add your handling code here:
+        if(txtId_Cod_Barr.getText().equals(""))
+        {
+            JOptionPane.showMessageDialog(null, "Introducir código");
+        }
+        else   
+        {
+            generarCodeBar();
+        }
     }//GEN-LAST:event_btnCargarCodBarrActionPerformed
 
     private void btnNewProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewProdActionPerformed
         // TODO add your handling code here:
-        objProductoDAO.Agregar(RecuperarDatos());
-        actualizarJtable();
-        Limpiar();        
+        Limpiar();
+        botonagregar();
     }//GEN-LAST:event_btnNewProdActionPerformed
 
-    public void SeleccionarImagen(JLabel lblImagen)
-    {
-        JFileChooser SelectorImagenes = new JFileChooser();
-        if(SelectorImagenes.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
-          File Archivo = SelectorImagenes.getSelectedFile();
-          String RutaArchivo = Archivo.getAbsolutePath();
-          
-         ImageIcon ImagenP=new ImageIcon(((new ImageIcon(RutaArchivo)).getImage()).getScaledInstance(lblImagen.getWidth(),lblImagen.getHeight(), java.awt.Image.SCALE_SMOOTH));
-         lblImagen.setIcon(ImagenP);
-            System.out.println("Nombre Imagen:" + Archivo.getName());
-        }   
-    }
+    private void btnGuarProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuarProdActionPerformed
+        // TODO add your handling code here:
+        objProductoDAO.Agregar(RecuperarDatos());
+        actualizarJtable();
+        Limpiar(); 
+    }//GEN-LAST:event_btnGuarProdActionPerformed
+
+    private void txtIvaREProStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_txtIvaREProStateChanged
+        // TODO add your handling code here:
+        ActualizarPrecios();
+    }//GEN-LAST:event_txtIvaREProStateChanged
+
+    private void txtPreComREProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPreComREProActionPerformed
+        // TODO add your handling code here:
+        ActualizarPrecios();
+    }//GEN-LAST:event_txtPreComREProActionPerformed
+
+    private void jTableProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableProductosMouseClicked
+        // TODO add your handling code here:
+        botonModificar();
+        int row = jTableProductos.getSelectedRow();
+        System.out.println("--"+row);
+        JTable target = (JTable)evt.getSource();
+        
+        ProductoBO Datos = objProductoDAO.LlenarCampos(target.getValueAt(target.getSelectedRow(), 0).toString());
+        txtCodREProd.setText(Datos.getCodigo());
+        txtId_Cod_Barr.setText(Datos.getId_Codigo_barra());
+        txtNomREProd.setText(Datos.getNombre());
+        txtDescProd.setText(Datos.getDescripcion());
+        txtMarcREPro.setText(Datos.getMarca());
+        txtCantREPro.setValue(Integer.parseInt(Datos.getStock()));
+        cbxUnidREPro.setSelectedIndex(Integer.parseInt(Datos.getUnidad()));
+        txtPreComREPro.setText(Datos.getPrecio_compra());
+        txtPreVentREPro.setText(Datos.getPrecio_Venta());
+        txtUtilREPro.setText(Datos.getUtilidad());
+        spinDescREProd.setValue(Integer.parseInt(Datos.getDescuento()));
+        txtIvaREPro.setValue(Integer.parseInt(Datos.getIVA()));
+        cbxCateREPro.setSelectedIndex(Integer.parseInt(Datos.getId_categoria()));
+        txtProveREPro.setText(Datos.getId_proveedor());
+        if(!Datos.getDescuento().equals("0"))
+        {
+            calenDeREPro.setDate(convertToFecha(Datos.getFech_ini_Desc()));
+            //System.out.println("Entre");
+            calenAREPro.setDate(convertToFecha(Datos.getFech_fin_Desc()));
+        }
+
+                
+    }//GEN-LAST:event_jTableProductosMouseClicked
+
+    private void btnCancelProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelProdActionPerformed
+        // TODO add your handling code here:
+        if(txtCodREProd.getText()=="")
+        {
+            JOptionPane.showMessageDialog(null, "Elegir registro");
+        }
+        else
+        {
+            objProductoDAO.Eliminar(RecuperarDatos());
+            Limpiar();
+            actualizarJtable();
+        }
+    }//GEN-LAST:event_btnCancelProdActionPerformed
+
+    private void btnModifProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifProdActionPerformed
+        // TODO add your handling code here:
+        botonagregar();
+        objProductoDAO.ModificarConImagen(RecuperarDatos());
+        actualizarJtable();
+        Limpiar(); 
+        
+    }//GEN-LAST:event_btnModifProdActionPerformed
         
     public static String fechaactual()
     {
         Date fecha = new Date();
-        SimpleDateFormat formatofecha = new SimpleDateFormat("dd/MM/YYYY");
+        SimpleDateFormat formatofecha = new SimpleDateFormat("yyyy/MM/dd");
         return formatofecha.format(fecha);
     }
     

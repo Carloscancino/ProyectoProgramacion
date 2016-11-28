@@ -15,8 +15,8 @@ public class ProductoBO {
     private String Precio_Venta;
     private String Utilidad;
     private String Descuento;
-    private Date Fech_ini_Desc;
-    private Date Fech_fin_Desc;
+    private String Fech_ini_Desc;
+    private String Fech_fin_Desc;
     private byte [] Imagen;
     private String IVA;
     private byte[] Codigo_barras;
@@ -112,19 +112,19 @@ public class ProductoBO {
         this.Descuento = Descuento;
     }
 
-    public Date getFech_ini_Desc() {
+    public String getFech_ini_Desc() {
         return Fech_ini_Desc;
     }
 
-    public void setFech_ini_Desc(Date Fech_ini_Desc) {
+    public void setFech_ini_Desc(String Fech_ini_Desc) {
         this.Fech_ini_Desc = Fech_ini_Desc;
     }
 
-    public Date getFech_fin_Desc() {
+    public String getFech_fin_Desc() {
         return Fech_fin_Desc;
     }
 
-    public void setFech_fin_Desc(Date Fech_fin_Desc) {
+    public void setFech_fin_Desc(String Fech_fin_Desc) {
         this.Fech_fin_Desc = Fech_fin_Desc;
     }
 

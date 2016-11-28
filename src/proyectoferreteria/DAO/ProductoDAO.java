@@ -1,5 +1,6 @@
 package proyectoferreteria.DAO;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -43,22 +44,22 @@ public class ProductoDAO {
     {
  //,,,,,,,,,,,,,,,,,
        String Consulta = "UPDATE producto SET "+
-                "id_Codigo_barras='"+ObjProducto.getId_Codigo_barra()+"','"+
-                "Imagen ='"+ObjProducto.getImagen()+"','"+
-                "Nombre='"+ObjProducto.getNombre()+"','"+
-                "Descripcion ='"+ObjProducto.getDescripcion()+"','"+
-                "Marca='"+ObjProducto.getMarca()+"','"+
-                "Stock='"+ObjProducto.getStock()+"','"+
-                "Unidad ='"+ObjProducto.getUnidad()+"','"+
-                "Precio_compra='"+ObjProducto.getPrecio_compra()+"','"+
-                "Precio_venta='"+ObjProducto.getPrecio_Venta()+"','"+
-                "Utilidad ='"+ObjProducto.getUtilidad()+"','"+
-                "Descuento ='"+ObjProducto.getDescuento()+"','"+
-                "Desc_fecha_inicio ='"+ObjProducto.getFech_ini_Desc()+"','"+
-                "Desc_fecha_fin ='"+ObjProducto.getFech_fin_Desc()+"','"+
-                "IVA ='"+ObjProducto.getIVA()+"','"+
-                "Codigo_barras ='"+ObjProducto.getCodigo_barras()+"','"+
-                "Categoria_id_categoria ='"+ObjProducto.getId_categoria()+"','"+
+                "id_Codigo_barras='"+ObjProducto.getId_Codigo_barra()+"',"+
+            //    "Imagen ='"+ObjProducto.getImagen()+"','"+
+                "Nombre='"+ObjProducto.getNombre()+"',"+
+                "Descripcion ='"+ObjProducto.getDescripcion()+"',"+
+                "Marca='"+ObjProducto.getMarca()+"',"+
+                "Stock='"+ObjProducto.getStock()+"',"+
+                "Unidad ='"+ObjProducto.getUnidad()+"',"+
+                "Precio_compra='"+ObjProducto.getPrecio_compra()+"',"+
+                "Precio_venta='"+ObjProducto.getPrecio_Venta()+"',"+
+                "Utilidad ='"+ObjProducto.getUtilidad()+"',"+
+                "Descuento ='"+ObjProducto.getDescuento()+"',"+
+                "Desc_fecha_inicio = '"+ObjProducto.getFech_ini_Desc()+"',"+
+                "Desc_fecha_fin = '"+ObjProducto.getFech_fin_Desc()+"',"+
+                "IVA ='"+ObjProducto.getIVA()+"',"+
+            //    "Codigo_barras ='"+ObjProducto.getCodigo_barras()+"','"+
+                "Categoria_id_categoria ='"+ObjProducto.getId_categoria()+"',"+
                 "Proveedor_id_proveedor ='"+ObjProducto.getId_proveedor()+"' "+
 
                 "WHERE id_producto='"+ObjProducto.getCodigo()+"';";
@@ -76,11 +77,12 @@ public class ProductoDAO {
  //,,,,,,,,,,,,,,,,,
        String Consulta = "UPDATE producto SET "+
                 "Estatus = 0 "+
-                "WHERE id_producto='"+ObjProducto.getCodigo()+"';";
+                "WHERE id_producto="+ObjProducto.getCodigo()+";";
+       JOptionPane.showMessageDialog(null, Consulta);
        int resultado = objConexion.EjecutarComandoSQL(Consulta);
        
        if(resultado==1)
-            JOptionPane.showMessageDialog(null,"Se ha modificado correctamente","Información", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null,"Se ha eliminado correctamente","Información", JOptionPane.INFORMATION_MESSAGE);
         else
             JOptionPane.showMessageDialog(null,"No se pudo completar la operación","Error", JOptionPane.ERROR_MESSAGE);
     }   
@@ -117,6 +119,42 @@ public class ProductoDAO {
          }catch(SQLException e){
          return null;
          }
+    }    
+    public ProductoBO LlenarCampos(String Id)//Lllena Todos los texBox, ComboBox etc
+    {
+        try 
+        {
+            ProductoBO Dato = new ProductoBO();
+            String sql = "Select * From producto Where id_producto = '"+ Id +"';";
+            PreparedStatement pstm = objConexion.ConectarSQLite().prepareStatement(sql);
+            ResultSet Resultado = pstm.executeQuery();
+            
+            while(Resultado.next())
+            {
+                Dato.setCodigo(Resultado.getString(1));
+                Dato.setId_Codigo_barra(Resultado.getString(2));
+                Dato.setNombre(Resultado.getString(3));
+                Dato.setDescripcion(Resultado.getString(4));
+                Dato.setMarca(Resultado.getString(5));
+                Dato.setStock(Resultado.getString(6));
+                Dato.setUnidad(Resultado.getString(7));
+                Dato.setPrecio_compra(Resultado.getString(8));
+                Dato.setPrecio_Venta(Resultado.getString(9));
+                Dato.setUtilidad(Resultado.getString(10));
+                Dato.setDescuento(Resultado.getString(11));            
+                Dato.setFech_ini_Desc(Resultado.getString(12));            
+                Dato.setFech_fin_Desc(Resultado.getString(13));
+                Dato.setIVA(Resultado.getString(15));
+                Dato.setId_categoria(Resultado.getString(17));
+                Dato.setId_proveedor(Resultado.getString(18));
+            }
+            objConexion.Desconectar();
+            return Dato;
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+            //Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }        
     }    
     
 }
