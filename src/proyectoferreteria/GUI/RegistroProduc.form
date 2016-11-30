@@ -31,7 +31,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <Component id="pnlRegistrarProduc" min="-2" pref="582" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="12" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="16" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -174,8 +174,8 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="lblImaProd" min="-2" pref="143" max="-2" attributes="0"/>
                                           <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblImaProd" min="-2" pref="143" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
@@ -249,8 +249,8 @@
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="jScrollPane2" pref="80" max="32767" attributes="0"/>
                                           <Component id="lblImaProd" max="32767" attributes="0"/>
-                                          <Component id="jScrollPane2" min="-2" pref="80" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="32767" attributes="0"/>
                                       <Component id="lblProvProd2" min="-2" max="-2" attributes="0"/>
@@ -556,14 +556,14 @@
             </Component>
             <Component class="javax.swing.JTextField" name="txtPreVentREPro">
               <Properties>
-                <Property name="editable" type="boolean" value="false"/>
                 <Property name="text" type="java.lang.String" value="0"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtUtilREPro">
               <Properties>
-                <Property name="editable" type="boolean" value="false"/>
                 <Property name="text" type="java.lang.String" value="0"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblIvaProd">

@@ -23,7 +23,16 @@ public class ProductoBO {
     private String id_categoria;
     private String id_proveedor;
     private boolean estatus;
+    private String NumeroVentas;
 
+    public String getNumeroVentas() {
+        return NumeroVentas;
+    }
+
+    public void setNumeroVentas(String NumeroVentas) {
+        this.NumeroVentas = NumeroVentas;
+    }
+    
     public String getCodigo() {
         return Codigo;
     }

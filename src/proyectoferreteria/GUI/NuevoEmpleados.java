@@ -36,6 +36,7 @@ public class NuevoEmpleados extends javax.swing.JInternalFrame {
     String rutaImagem="";
     UsuariosDAO metodos = new UsuariosDAO();
     String Estatus = "";
+    Boolean Correcto = false;
     ManejoDeImagenes metodosImagen = new ManejoDeImagenes();
     byte[] imag;
     
@@ -475,9 +476,13 @@ public class NuevoEmpleados extends javax.swing.JInternalFrame {
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         try
         {
+            Validar();
+            if(Correcto == true)
+            {
             metodos.AgregarConIagen(RecuperarDatos());
             actualizarJtable();
             Limpiar();
+            }
         }catch(Exception ex)
         {
             JOptionPane.showMessageDialog(null, ex);
@@ -568,6 +573,66 @@ public class NuevoEmpleados extends javax.swing.JInternalFrame {
     {
         dtm = metodos.Llenar();
         tbBusNuevEmple1.setModel(dtm);   
+    }
+    
+    public void Validar()
+    {
+        Correcto = false;
+        if(txtFNcimiento.getDate() == null)
+        {
+            Correcto = false;
+            JOptionPane.showMessageDialog(null, "Ingresar Fecha de Nacimieentto");
+            return;
+        }
+        if("".equals(txtNombNuevEmple.getText()))
+        {
+            Correcto = false;
+            JOptionPane.showMessageDialog(null, "Ingresar Nombre");
+            return;
+        }
+        if("".equals(txtApelliNuevEmple.getText()))
+        {
+            Correcto = false;
+            JOptionPane.showMessageDialog(null, "Ingresar Apellido");
+            return;
+        }
+        if("".equals(txtEmailNueEmple.getText()))
+        {
+            Correcto = false;
+            JOptionPane.showMessageDialog(null, "Ingresar Correo");
+            return;
+        }
+        if("".equals(txtDNI.getText()))
+        {
+            Correcto = false;
+            JOptionPane.showMessageDialog(null, "Ingresar DNI");
+            return;
+        }
+        if("".equals(txtDireccion.getText()))
+        {
+            Correcto = false;
+            JOptionPane.showMessageDialog(null, "Ingresar Dirección");
+            return;
+        }
+        if("".equals(txtTelefono.getText()))
+        {
+            Correcto = false;
+            JOptionPane.showMessageDialog(null, "Ingresar Télefono");
+            return;
+        }
+        if("".equals(txtUsuarioUser.getText()))
+        {
+            Correcto = false;
+            JOptionPane.showMessageDialog(null, "Ingresar Nombre de Usuario");
+            return;
+        }
+        if("".equals(txtContrseña.getText()))
+        {
+            Correcto = false;
+            JOptionPane.showMessageDialog(null, "Ingresar Contraseña");
+            return;
+        }
+        Correcto = true;
     }
     
 

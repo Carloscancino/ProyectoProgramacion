@@ -185,4 +185,33 @@ public class ProductoDAO {
          }
     }    
     
+    
+    public int AgregarAStock(String id_prod, int add){
+        
+        ProductoBO datos = LlenarCampos(id_prod);
+        int newStock =  Integer.parseInt(datos.getStock()) + add;
+        String Sentencia = "UPDATE producto SET Stock = '" + newStock + "' WHERE id_producto = "+datos.getCodigo()+"";
+        JOptionPane.showMessageDialog(null, Sentencia);
+        int ComandoEjecutado=objConexion.EjecutarComandoSQL(Sentencia);
+        objConexion.Desconectar();
+        return ComandoEjecutado;
+    }
+    public int quitarrAStock(String id_prod, int less){
+        ProductoBO datos = LlenarCampos(id_prod);
+        int lessStock =  Integer.parseInt(datos.getStock()) - less;
+        String Sentencia = "UPDATE producto SET Stock = '" + lessStock + "' WHERE id_producto = "+datos.getCodigo()+"";
+        JOptionPane.showMessageDialog(null, Sentencia);
+        int ComandoEjecutado=objConexion.EjecutarComandoSQL(Sentencia);
+        objConexion.Desconectar();
+        return ComandoEjecutado;
+    }
+    public int addTotalVentas(ProductoBO objProducto){
+        
+        int lessStock =  Integer.parseInt(objProducto.getNumeroVentas()) + 1;
+        String Sentencia = "UPDATE producto SET NumeroVentas = '" + lessStock + "' WHERE id_producto = "+objProducto.getCodigo()+"";
+        JOptionPane.showMessageDialog(null, Sentencia);
+        int ComandoEjecutado=objConexion.EjecutarComandoSQL(Sentencia);
+        objConexion.Desconectar();
+        return ComandoEjecutado;
+    }    
 }

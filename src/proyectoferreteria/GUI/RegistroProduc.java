@@ -47,6 +47,7 @@ public class RegistroProduc extends javax.swing.JInternalFrame {
     byte[] imag2;
     JFileChooser SelectorImagenes;
     String rutaImagem="";
+    Boolean Correcto = false;
     DefaultTableModel dtm =new DefaultTableModel(
         new Object [][] {},
         new String [] {
@@ -168,6 +169,7 @@ public class RegistroProduc extends javax.swing.JInternalFrame {
         lblImaProd1.setIcon(null);
         lblImaProd.setIcon(null);
         imagenCodeBar = null;
+        lblImaProd.setSize(143, 80);
     }
     public void botonagregar()
     {
@@ -416,8 +418,8 @@ public class RegistroProduc extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblImaProd, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel6))
+                                    .addComponent(jLabel6)
+                                    .addComponent(lblImaProd, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel5)
@@ -473,8 +475,8 @@ public class RegistroProduc extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(lblImaProd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                                    .addComponent(lblImaProd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(lblProvProd2))
                             .addComponent(lblImaProd1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -504,11 +506,11 @@ public class RegistroProduc extends javax.swing.JInternalFrame {
             }
         });
 
-        txtPreVentREPro.setEditable(false);
         txtPreVentREPro.setText("0");
+        txtPreVentREPro.setEnabled(false);
 
-        txtUtilREPro.setEditable(false);
         txtUtilREPro.setText("0");
+        txtUtilREPro.setEnabled(false);
 
         lblIvaProd.setText("IVA %:");
 
@@ -717,7 +719,7 @@ public class RegistroProduc extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(pnlRegistrarProduc, javax.swing.GroupLayout.PREFERRED_SIZE, 582, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 12, Short.MAX_VALUE))
+                .addGap(0, 16, Short.MAX_VALUE))
         );
 
         pack();
@@ -748,9 +750,13 @@ public class RegistroProduc extends javax.swing.JInternalFrame {
 
     private void btnGuarProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuarProdActionPerformed
         // TODO add your handling code here:
-        objProductoDAO.Agregar(RecuperarDatos());
-        actualizarJtable();
-        Limpiar(); 
+        Validar();
+        if(Correcto == true)
+        {
+            objProductoDAO.Agregar(RecuperarDatos());
+            actualizarJtable();
+            Limpiar(); 
+        }
     }//GEN-LAST:event_btnGuarProdActionPerformed
 
     private void txtIvaREProStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_txtIvaREProStateChanged
@@ -765,6 +771,7 @@ public class RegistroProduc extends javax.swing.JInternalFrame {
 
     private void jTableProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableProductosMouseClicked
         // TODO add your handling code here:
+        Limpiar();
         botonModificar();
         int row = jTableProductos.getSelectedRow();
         System.out.println("--"+row);
@@ -830,6 +837,41 @@ public class RegistroProduc extends javax.swing.JInternalFrame {
         return formatofecha.format(fecha);
     }
     
+    public void Validar()
+    {
+        Correcto = false;
+        if("".equals(txtNomREProd.getText()))
+        {
+            Correcto = false;
+            JOptionPane.showMessageDialog(null, "Ingresar El Nombrre");
+            return;
+        }
+        if("".equals(txtDescProd.getText()))
+        {
+            Correcto = false;
+            JOptionPane.showMessageDialog(null, "Ingresar Descripción");
+            return;
+        }
+        if("".equals(txtMarcREPro.getText()))
+        {
+            Correcto = false;
+            JOptionPane.showMessageDialog(null, "Ingresar Marca");
+            return;
+        }
+        if("".equals(txtProveREPro.getText()))
+        {
+            Correcto = false;
+            JOptionPane.showMessageDialog(null, "Ingresar Proveedor");
+            return;
+        }
+        if("".equals(txtId_Cod_Barr.getText()))
+        {
+            Correcto = false;
+            JOptionPane.showMessageDialog(null, "Ingresar Código de Barras");
+            return;
+        }
+        Correcto = true;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelProd;

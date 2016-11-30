@@ -19,7 +19,33 @@ import proyectoferreteria.Conexion.Conexion;
  */
 public class VentaEncabezadoDAO {
     
-        Conexion conn = new Conexion();
+    Conexion conn = new Conexion();
+    
+    public int Agregar(VentaEncabezadoBO objVenta){
+        String Sentencia = "INSERT INTO venta_encabezado(Fecha,Total, Proveedor_id_proveedor,Empleado_id_empleado,Status)\n" +
+            "VALUES ('"+objVenta.getFecha()+"','"+objVenta.getTotal()+"','"+objVenta.getId_clieto()+"','"+objVenta.getId_empleado()+"',1);";
+        int ComandoEjecutado=conn.EjecutarComandoSQL(Sentencia);
+        conn.Desconectar();
+        return ComandoEjecutado;
+    }
+    public String MaxId()
+    {
+        try{
+         String id_Max = "";
+         Conexion objConexion= new Conexion();
+         ResultSet  Resultado=objConexion.EjecutarSentenciaSQL("select max(id_venta_encabezado) as maximo from venta_encabezado");
+         while(Resultado.next()){
+        // Recuperar Datos de la GUI
+            id_Max = Resultado.getString(1);
+        // Agregar Datos al JTable
+                
+        }
+         return id_Max;       
+         }catch(SQLException e){
+         return null;
+         }
+    }    
+    
     public VentaEncabezadoBO TotalVentas(String Fecha)
     {
         try 

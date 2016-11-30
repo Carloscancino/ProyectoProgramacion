@@ -83,13 +83,15 @@ public class PaginaPrincipal extends javax.swing.JFrame implements Runnable{
         menuItemNueProd = new javax.swing.JMenuItem();
         menuItemElimProd = new javax.swing.JMenuItem();
         menuItemCatego = new javax.swing.JMenuItem();
-        menuItemUnid = new javax.swing.JMenuItem();
         menuCompra = new javax.swing.JMenu();
         menuItemProvee = new javax.swing.JMenuItem();
         menuItemCompras = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         menuEmpleado = new javax.swing.JMenu();
         menuItemEmplea = new javax.swing.JMenuItem();
         menuVentas = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        btnIngresarVenta = new javax.swing.JMenuItem();
         menuItemBusVen = new javax.swing.JMenuItem();
         menuConsultas = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -233,15 +235,6 @@ public class PaginaPrincipal extends javax.swing.JFrame implements Runnable{
         });
         menuAlmacen.add(menuItemCatego);
 
-        menuItemUnid.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/unidad.png"))); // NOI18N
-        menuItemUnid.setText("Ingresar Unidad");
-        menuItemUnid.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItemUnidActionPerformed(evt);
-            }
-        });
-        menuAlmacen.add(menuItemUnid);
-
         jMenuBar1.add(menuAlmacen);
 
         menuCompra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/compra.png"))); // NOI18N
@@ -265,6 +258,10 @@ public class PaginaPrincipal extends javax.swing.JFrame implements Runnable{
         });
         menuCompra.add(menuItemCompras);
 
+        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscar2.png"))); // NOI18N
+        jMenuItem2.setText("Buscar Compras");
+        menuCompra.add(jMenuItem2);
+
         jMenuBar1.add(menuCompra);
 
         menuEmpleado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/usuarios2.png"))); // NOI18N
@@ -283,6 +280,19 @@ public class PaginaPrincipal extends javax.swing.JFrame implements Runnable{
 
         menuVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/venta.png"))); // NOI18N
         menuVentas.setText("Ventas");
+
+        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/usuario.png"))); // NOI18N
+        jMenuItem3.setText("Ingresar Clientes");
+        menuVentas.add(jMenuItem3);
+
+        btnIngresarVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/compra.png"))); // NOI18N
+        btnIngresarVenta.setText("Ingresar Venta");
+        btnIngresarVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIngresarVentaActionPerformed(evt);
+            }
+        });
+        menuVentas.add(btnIngresarVenta);
 
         menuItemBusVen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscar2.png"))); // NOI18N
         menuItemBusVen.setText("Buscar Ventas");
@@ -477,16 +487,6 @@ public class PaginaPrincipal extends javax.swing.JFrame implements Runnable{
         v.setVisible(true);
     }//GEN-LAST:event_menuItemProveeActionPerformed
 
-    private void menuItemUnidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemUnidActionPerformed
-        // TODO add your handling code here:
-        UnidadProducto v = new UnidadProducto();
-        jDesktop.add(v);
-        Dimension desktopSize = jDesktop.getSize();
-        Dimension FrameSize = v.getSize();
-        v.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);        
-        v.setVisible(true); 
-    }//GEN-LAST:event_menuItemUnidActionPerformed
-
     private void menuItemNueProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemNueProdActionPerformed
         // TODO add your handling code here:
        RegistroProduc v = new RegistroProduc();
@@ -613,6 +613,16 @@ public class PaginaPrincipal extends javax.swing.JFrame implements Runnable{
         v.setVisible(true); 
         }catch(Exception ex){JOptionPane.showMessageDialog(null, ex);}
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void btnIngresarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarVentaActionPerformed
+        // TODO add your handling code here:
+        ventanaVentas v = new ventanaVentas();
+        jDesktop.add(v);
+        Dimension desktopSize = jDesktop.getSize();
+        Dimension FrameSize = v.getSize();
+        v.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);        
+        v.setVisible(true);         
+    }//GEN-LAST:event_btnIngresarVentaActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -649,10 +659,13 @@ public class PaginaPrincipal extends javax.swing.JFrame implements Runnable{
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem btnIngresarVenta;
     private javax.swing.JDesktopPane jDesktop;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblEstadoUsuario;
     private javax.swing.JLabel lblPrincFecha;
@@ -677,7 +690,6 @@ public class PaginaPrincipal extends javax.swing.JFrame implements Runnable{
     private javax.swing.JMenu menuItemProd;
     private javax.swing.JMenuItem menuItemProvee;
     private javax.swing.JMenuItem menuItemSalir;
-    private javax.swing.JMenuItem menuItemUnid;
     private javax.swing.JMenuItem menuReportProd;
     private javax.swing.JMenuItem menuRespBD;
     private javax.swing.JMenuItem menuRestBD;

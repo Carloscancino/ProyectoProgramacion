@@ -5,6 +5,9 @@
  */
 package proyectoferreteria.GUI;
 
+import javax.swing.JOptionPane;
+import proyectoferreteria.BO.ProductoBO;
+import proyectoferreteria.DAO.ProductoDAO;
 import java.awt.Frame;
 import java.awt.Image;
 import java.text.DecimalFormat;
@@ -18,43 +21,50 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import proyectoferreteria.BO.CompraDetalleBO;
-import proyectoferreteria.BO.CompraEncabezadoBO;
-import proyectoferreteria.BO.ProductoBO;
-import proyectoferreteria.DAO.CompraDetalleDAO;
-import proyectoferreteria.DAO.CompraEncabezadoDAO;
-import proyectoferreteria.DAO.ProductoDAO;
 
-/**
- *
- * @author Emmanuel
- */
-public class VentanaCompras extends javax.swing.JInternalFrame {
+public class ventanaVentas extends javax.swing.JInternalFrame {
 
-    String Id_Proveedor ="";
+    public ventanaVentas() {
+        initComponents();
+        lblfecha.setText(fechaactual());
+    }
+
+    String id_Cliente ="";
     String Nombre__Proveedor = "";
     ProductoBO objProductoBO = new ProductoBO();
     ProductoDAO objProductoDAO = new ProductoDAO();
     String id_producto="";
-    CompraEncabezadoBO objEncabezadoBO = new CompraEncabezadoBO();
-    CompraEncabezadoDAO objEncabezadoDAO = new CompraEncabezadoDAO();
-    CompraDetalleBO objDetalleBO = new CompraDetalleBO();
-    CompraDetalleDAO objDetalloDAO = new CompraDetalleDAO();
-    
-    public VentanaCompras() {
-        initComponents();
-        lblfecha.setText(fechaactual());
-    }
     DefaultTableModel dtm =new DefaultTableModel(
         new Object [][] {},
         new String [] {
             "Código", "Nombre","Descripción","Cantidad","Precio","Descuento","SubTotal", "Total"
         }
-    );    
+    );      
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        txtNombreProveedor = new javax.swing.JTextField();
+        btnabrirProveedor = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        lblfecha = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
+        btnGuarProd = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        txtCodigobar_prod = new javax.swing.JTextField();
+        btnabrirprod = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        txtStock = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        txtnomProd = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        txtPrecio_prod = new javax.swing.JTextField();
+        btnCancelProd = new javax.swing.JButton();
+        jTextField10 = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         txtSubTotal = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
@@ -69,144 +79,14 @@ public class VentanaCompras extends javax.swing.JInternalFrame {
         txtCantREPro = new javax.swing.JSpinner();
         btnadd = new javax.swing.JButton();
         btndelete = new javax.swing.JButton();
-        jTextField2 = new javax.swing.JTextField();
-        btnGuarProd = new javax.swing.JButton();
-        btnCancelProd = new javax.swing.JButton();
-        jTextField10 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtCompras = new javax.swing.JTable();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        txtNombreProveedor = new javax.swing.JTextField();
-        btnabrirProveedor = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        lblfecha = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        txtCodigobar_prod = new javax.swing.JTextField();
-        btnabrirprod = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        txtStock = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        txtnomProd = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
-        txtPrecio_prod = new javax.swing.JTextField();
 
         setClosable(true);
 
-        jLabel10.setText("SUB TOTAL:");
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos de la Venta"));
 
-        txtSubTotal.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtSubTotal.setText("0.00");
-
-        jLabel11.setText("IVA:");
-
-        jLabel12.setText("TOTAL A PAGAR:");
-
-        txtTotalCompra.setBackground(new java.awt.Color(0, 0, 0));
-        txtTotalCompra.setForeground(new java.awt.Color(0, 153, 0));
-        txtTotalCompra.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        txtTotalCompra.setText("0.00");
-
-        jLabel2.setText("No de Compra");
-
-        jLabel5.setText("CANTIDAD:");
-
-        jLabel7.setText("TOTAL:");
-
-        txttotalprod.setEditable(false);
-        txttotalprod.setText("0");
-
-        txtCantREPro.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
-        txtCantREPro.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                txtCantREProStateChanged(evt);
-            }
-        });
-
-        btnadd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/palomita.png"))); // NOI18N
-        btnadd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnaddActionPerformed(evt);
-            }
-        });
-
-        btndelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancelar.png"))); // NOI18N
-        btndelete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btndeleteActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtCantREPro, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
-                .addComponent(jLabel7)
-                .addGap(27, 27, 27)
-                .addComponent(txttotalprod, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
-                .addComponent(btnadd, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
-                .addComponent(btndelete, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btndelete)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel5)
-                        .addComponent(jLabel7)
-                        .addComponent(txttotalprod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtCantREPro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnadd)))
-                .addGap(40, 40, 40))
-        );
-
-        jTextField2.setEditable(false);
-        jTextField2.setText("000001");
-
-        btnGuarProd.setBackground(new java.awt.Color(95, 186, 125));
-        btnGuarProd.setForeground(new java.awt.Color(255, 255, 255));
-        btnGuarProd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/guardar.png"))); // NOI18N
-        btnGuarProd.setText("Guardar");
-        btnGuarProd.setMaximumSize(new java.awt.Dimension(95, 25));
-        btnGuarProd.setMinimumSize(new java.awt.Dimension(95, 25));
-        btnGuarProd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuarProdActionPerformed(evt);
-            }
-        });
-
-        btnCancelProd.setBackground(new java.awt.Color(95, 186, 125));
-        btnCancelProd.setForeground(new java.awt.Color(255, 255, 255));
-        btnCancelProd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancelar.png"))); // NOI18N
-        btnCancelProd.setText("Cancelar");
-        btnCancelProd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelProdActionPerformed(evt);
-            }
-        });
-
-        jTextField10.setEditable(false);
-        jTextField10.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField10.setText("15.00");
-
-        jtCompras.setModel(dtm);
-        jScrollPane1.setViewportView(jtCompras);
-
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos de la compra"));
-
-        jLabel1.setText("PROVEEDOR:");
+        jLabel1.setText("CLIENTE:");
 
         btnabrirProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscar.png"))); // NOI18N
         btnabrirProveedor.addActionListener(new java.awt.event.ActionListener() {
@@ -251,6 +131,21 @@ public class VentanaCompras extends javax.swing.JInternalFrame {
                     .addComponent(btnabrirProveedor, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
+
+        jTextField2.setEditable(false);
+        jTextField2.setText("000001");
+
+        btnGuarProd.setBackground(new java.awt.Color(95, 186, 125));
+        btnGuarProd.setForeground(new java.awt.Color(255, 255, 255));
+        btnGuarProd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/guardar.png"))); // NOI18N
+        btnGuarProd.setText("Guardar");
+        btnGuarProd.setMaximumSize(new java.awt.Dimension(95, 25));
+        btnGuarProd.setMinimumSize(new java.awt.Dimension(95, 25));
+        btnGuarProd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuarProdActionPerformed(evt);
+            }
+        });
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos del producto"));
 
@@ -334,6 +229,101 @@ public class VentanaCompras extends javax.swing.JInternalFrame {
                 .addComponent(txtnomProd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        btnCancelProd.setBackground(new java.awt.Color(95, 186, 125));
+        btnCancelProd.setForeground(new java.awt.Color(255, 255, 255));
+        btnCancelProd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancelar.png"))); // NOI18N
+        btnCancelProd.setText("Cancelar");
+        btnCancelProd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelProdActionPerformed(evt);
+            }
+        });
+
+        jTextField10.setEditable(false);
+        jTextField10.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField10.setText("15.00");
+
+        jLabel10.setText("SUB TOTAL:");
+
+        txtSubTotal.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtSubTotal.setText("0.00");
+
+        jLabel11.setText("IVA:");
+
+        jLabel12.setText("TOTAL A PAGAR:");
+
+        txtTotalCompra.setBackground(new java.awt.Color(0, 0, 0));
+        txtTotalCompra.setForeground(new java.awt.Color(0, 153, 0));
+        txtTotalCompra.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txtTotalCompra.setText("0.00");
+
+        jLabel2.setText("No de Compra");
+
+        jLabel5.setText("CANTIDAD:");
+
+        jLabel7.setText("TOTAL:");
+
+        txttotalprod.setEditable(false);
+        txttotalprod.setText("0");
+
+        txtCantREPro.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        txtCantREPro.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                txtCantREProStateChanged(evt);
+            }
+        });
+
+        btnadd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/palomita.png"))); // NOI18N
+        btnadd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnaddActionPerformed(evt);
+            }
+        });
+
+        btndelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancelar.png"))); // NOI18N
+        btndelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btndeleteActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtCantREPro, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(jLabel7)
+                .addGap(27, 27, 27)
+                .addComponent(txttotalprod, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addComponent(btnadd, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(btndelete, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btndelete)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel5)
+                        .addComponent(jLabel7)
+                        .addComponent(txttotalprod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtCantREPro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnadd)))
+                .addGap(40, 40, 40))
+        );
+
+        jtCompras.setModel(dtm);
+        jScrollPane1.setViewportView(jtCompras);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -427,99 +417,51 @@ public class VentanaCompras extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    public static String fechaactual()
+    {
+        Date fecha = new Date();
+        SimpleDateFormat formatofecha = new SimpleDateFormat("yyyy/MM/dd");
+        return formatofecha.format(fecha);
+    }   
     private void btnabrirProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnabrirProveedorActionPerformed
-        LimpiarProducto();
         Frame f = JOptionPane.getFrameForComponent(this);
-        ventanaBuscarProveedor abrir = new ventanaBuscarProveedor(f, true);
+        ventanaBuscarCliente abrir = new ventanaBuscarCliente(f, true);
         abrir.setLocationRelativeTo(null);
         abrir.setResizable(false);
         abrir.setVisible(true);
-        Id_Proveedor = abrir.IdProveedor;
-        Nombre__Proveedor = abrir.NombreProveedor;
-        actualizarProveedor();
     }//GEN-LAST:event_btnabrirProveedorActionPerformed
+
+    private void btnGuarProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuarProdActionPerformed
+
+    }//GEN-LAST:event_btnGuarProdActionPerformed
 
     private void btnabrirprodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnabrirprodActionPerformed
         // TODO add your handling code here:
-        if(Id_Proveedor.equals(""))
-        {
-            JOptionPane.showMessageDialog(null, "Elegir Proveedor");
-        }
-        else
-        {
-            Frame f = JOptionPane.getFrameForComponent(this);
-            ventanaBuscarProducto abrir = new ventanaBuscarProducto(f, true);
-            abrir.lblcodigo.setText(Id_Proveedor);
-            abrir.actualizarJtable();
-            abrir.setLocationRelativeTo(null);
-            abrir.setResizable(false);
-            abrir.setVisible(true);
-            id_producto=abrir.idProducto;
-            llenarDatos(id_producto);
-            CalcularPrecioF();
-        }
+ 
     }//GEN-LAST:event_btnabrirprodActionPerformed
-
-    private void btnaddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddActionPerformed
-        // TODO add your handling code here:zz
-        agregaraCompra();
-        calcularTotal();
-    }//GEN-LAST:event_btnaddActionPerformed
-
-    private void txtCantREProStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_txtCantREProStateChanged
-        // TODO add your handling code here:
-        CalcularPrecioF();
-    }//GEN-LAST:event_txtCantREProStateChanged
-
-    private void btndeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeleteActionPerformed
-        // TODO add your handling code here:
-        Date hoy = new Date();
-        String fechaFin = objProductoBO.getFech_fin_Desc();
-        JOptionPane.showMessageDialog(null, hoy.toGMTString() + " hasta" + fechaFin);
-        JOptionPane.showMessageDialog(null, hoy.compareTo(convertToFecha(fechaFin)));
-    }//GEN-LAST:event_btndeleteActionPerformed
-/*
-    Esto es para agregar una compra
-    */
-    
-    private void btnGuarProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuarProdActionPerformed
-        // TODO add your handling code here:
-        recuperDatosCompra();
-        LimpiarTodo();
-        limpiarTabla(jtCompras);
-  
-    }//GEN-LAST:event_btnGuarProdActionPerformed
 
     private void btnCancelProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelProdActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCancelProdActionPerformed
+
+    private void txtCantREProStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_txtCantREProStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCantREProStateChanged
+
+    private void btnaddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddActionPerformed
+        // TODO add your handling code here:zz
+
+    }//GEN-LAST:event_btnaddActionPerformed
+
+    public void agregaraCompra()
+    {
+
+    }
     public void recuperDatosCompra()
     {
-        objEncabezadoBO.setFecha(lblfecha.getText());
-        objEncabezadoBO.setTotal(txtTotalCompra.getText());
-        objEncabezadoBO.setId_proveedor(Id_Proveedor);
-        objEncabezadoBO.setId_empleado("3");
-        objEncabezadoDAO.Agregar(objEncabezadoBO);
-        String id_encabezado = objEncabezadoDAO.MaxId();
-        for (int i = 0; i < jtCompras.getRowCount(); i++) {
-            objDetalleBO.setId_Producto(jtCompras.getValueAt(i, 0).toString());
-            objDetalleBO.setCantidad(jtCompras.getValueAt(i, 3).toString());
-            objDetalleBO.setPrecio(jtCompras.getValueAt(i, 4).toString());
-            objDetalleBO.setPrecio_Final(jtCompras.getValueAt(i, 7).toString());
-            objDetalleBO.setId_Compra_Encabezado(id_encabezado);
-            objDetalloDAO.Agregar(objDetalleBO);
-        }
-        objEncabezadoDAO.MaxId();
-        JOptionPane.showMessageDialog(null, "Compra Realizada");
+       
     }
-    public int comparacion()
-    {
-        Date hoy = new Date();
-        String fechaFin = objProductoBO.getFech_fin_Desc();
-        return  hoy.compareTo(convertToFecha(fechaFin));
-        
-    }
+
     public void calcularTotal()
     {
         DecimalFormat decimales = new DecimalFormat("0.##");
@@ -533,37 +475,7 @@ public class VentanaCompras extends javax.swing.JInternalFrame {
         total = subtotal + ((subtotal/100)*15);
         String calculado = decimales.format(total);
         txtTotalCompra.setText(""+calculado);
-    }
-    public void agregaraCompra()
-    {
-        double total=0;
-        String preioDeLaVenta = "";
-        DecimalFormat decimales = new DecimalFormat("0.##");
-        if(comparacion()<0)
-        {
-            objProductoBO.setDescuento("0");
-            total = Double.parseDouble(txttotalprod.getText());
-            preioDeLaVenta = decimales.format(total);
-            
-        }
-        else
-        {
-            total = Double.parseDouble(txttotalprod.getText()) - ((Double.parseDouble(txttotalprod.getText())/100)* Double.parseDouble(objProductoBO.getDescuento()));
-            preioDeLaVenta = decimales.format(total);
-        }
-        Object[] newRow={
-           objProductoBO.getCodigo(),
-           objProductoBO.getNombre(),
-           objProductoBO.getDescripcion(),
-           txtCantREPro.getValue().toString(),
-           txtPrecio_prod.getText(),
-           objProductoBO.getDescuento()+"%",
-           txttotalprod.getText(),
-           preioDeLaVenta
-        };
-        dtm.addRow(newRow);
-        LimpiarProducto();
-    }
+    }    
     public void CalcularPrecioF()
     {
         if(Integer.parseInt(txtCantREPro.getValue().toString())> Integer.parseInt(txtStock.getText()))
@@ -621,37 +533,15 @@ public class VentanaCompras extends javax.swing.JInternalFrame {
     public void actualizarProveedor()
     {
         txtNombreProveedor.setText(Nombre__Proveedor);
-    }
-    public void LimpiarProducto()
-    {
-        txtCantREPro.setValue(1);
-        txtCodigobar_prod.setText("");
-        txtPrecio_prod.setText("0");
-        txtStock.setText("0");
-        txtPrecio_prod.setText("0");
-        txtnomProd.setText("");
-        txttotalprod.setText("0");
-        
-    }
-    public void botonesProducto()
-    {
-        btnabrirprod.setEnabled(true);
-        txtnomProd.setEditable(false);
-    }
-    public static String fechaactual()
-    {
-        Date fecha = new Date();
-        SimpleDateFormat formatofecha = new SimpleDateFormat("yyyy/MM/dd");
-        return formatofecha.format(fecha);
     }    
-    public void LimpiarTodo()
-    {
-        LimpiarProducto();
-        txtCodigobar_prod.setText("");
-        txtNombreProveedor.setText("");
-        txtSubTotal.setText("0.0");
-        txttotalprod.setText("0.0");
-    }   
+    private void btndeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeleteActionPerformed
+        // TODO add your handling code here:
+        Date hoy = new Date();
+        String fechaFin = objProductoBO.getFech_fin_Desc();
+        JOptionPane.showMessageDialog(null, hoy.toGMTString() + " hasta" + fechaFin);
+        JOptionPane.showMessageDialog(null, hoy.compareTo(convertToFecha(fechaFin)));
+    }//GEN-LAST:event_btndeleteActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelProd;
