@@ -8,6 +8,7 @@ package proyectoferreteria.GUI;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
+import java.security.Principal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,7 +21,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import proyectoferreteria.BO.UsuariosBO;
+import proyectoferreteria.Conexion.Conexion;
 import proyectoferreteria.DAO.Fondo;
 import proyectoferreteria.DAO.UsuariosDAO;
 
@@ -87,8 +94,6 @@ public class PaginaPrincipal extends javax.swing.JFrame implements Runnable{
         menuConsultas = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         menuReportProd = new javax.swing.JMenuItem();
-        menuItemRealVen = new javax.swing.JMenuItem();
-        menuItemFalliVen = new javax.swing.JMenuItem();
         menuAnular = new javax.swing.JMenu();
         menuAnulVenta = new javax.swing.JMenuItem();
         menuAnulCompr = new javax.swing.JMenuItem();
@@ -110,6 +115,10 @@ public class PaginaPrincipal extends javax.swing.JFrame implements Runnable{
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Página Principal Administrador");
+
+        jDesktop.setBackground(new java.awt.Color(226, 255, 226));
+        jDesktop.setForeground(new java.awt.Color(24, 2, 94));
+        jDesktop.setToolTipText("");
 
         lblUsuario.setText("Usuario:");
 
@@ -152,9 +161,6 @@ public class PaginaPrincipal extends javax.swing.JFrame implements Runnable{
         );
 
         jDesktop.setLayer(pnlEstado, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktop.setBackground(new java.awt.Color(226, 255, 226));
-        jDesktop.setForeground(new java.awt.Color(24, 2, 94));
-        jDesktop.setToolTipText("");
 
         javax.swing.GroupLayout jDesktopLayout = new javax.swing.GroupLayout(jDesktop);
         jDesktop.setLayout(jDesktopLayout);
@@ -294,6 +300,11 @@ public class PaginaPrincipal extends javax.swing.JFrame implements Runnable{
 
         jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/imprimir.png"))); // NOI18N
         jMenuItem1.setText("Imprimir Venta");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         menuConsultas.add(jMenuItem1);
 
         menuReportProd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/reporte.png"))); // NOI18N
@@ -304,24 +315,6 @@ public class PaginaPrincipal extends javax.swing.JFrame implements Runnable{
             }
         });
         menuConsultas.add(menuReportProd);
-
-        menuItemRealVen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/palomita2.png"))); // NOI18N
-        menuItemRealVen.setText("Ventas Realizadas");
-        menuItemRealVen.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItemRealVenActionPerformed(evt);
-            }
-        });
-        menuConsultas.add(menuItemRealVen);
-
-        menuItemFalliVen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancelar2.png"))); // NOI18N
-        menuItemFalliVen.setText("Ventas Fallidas");
-        menuItemFalliVen.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItemFalliVenActionPerformed(evt);
-            }
-        });
-        menuConsultas.add(menuItemFalliVen);
 
         jMenuBar1.add(menuConsultas);
 
@@ -528,28 +521,19 @@ public class PaginaPrincipal extends javax.swing.JFrame implements Runnable{
     }//GEN-LAST:event_menuItemEmpleaActionPerformed
 
     private void menuReportProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuReportProdActionPerformed
-        // TODO add your handling code here:
+       try {
+            Conexion cc = new Conexion();
+            
+            JasperReport reportes= (JasperReport) JRLoader.loadObject(Principal.class.getResource("/Reportes/ReporteProductos.jasper"));
+            JasperPrint print=JasperFillManager.fillReport(reportes, null, cc.ConectarSQLite());
+            JasperViewer jv = new JasperViewer(print,false);
+            jv.setTitle("Productos más vendidos");
+            jv.setVisible(true);
+            
+        } catch (Exception e) {
+            System.out.printf(e.getMessage());
+        }
     }//GEN-LAST:event_menuReportProdActionPerformed
-
-    private void menuItemRealVenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemRealVenActionPerformed
-        // TODO add your handling code here:
-        VentasRealizadas v = new VentasRealizadas();
-        jDesktop.add(v);
-        Dimension desktopSize = jDesktop.getSize();
-        Dimension FrameSize = v.getSize();
-        v.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);        
-        v.setVisible(true); 
-    }//GEN-LAST:event_menuItemRealVenActionPerformed
-
-    private void menuItemFalliVenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemFalliVenActionPerformed
-        // TODO add your handling code here:
-        VentasFallidas v = new VentasFallidas();
-        jDesktop.add(v);
-        Dimension desktopSize = jDesktop.getSize();
-        Dimension FrameSize = v.getSize();
-        v.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);        
-        v.setVisible(true); 
-    }//GEN-LAST:event_menuItemFalliVenActionPerformed
 
     private void menuItemBusVenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemBusVenActionPerformed
         // TODO add your handling code here:
@@ -617,6 +601,18 @@ public class PaginaPrincipal extends javax.swing.JFrame implements Runnable{
         v.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_menuItemCerrarSesionActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        try
+        {
+        ReportesVentasForm v = new ReportesVentasForm();
+        jDesktop.add(v);
+        Dimension desktopSize = jDesktop.getSize();
+        Dimension FrameSize = v.getSize();
+        v.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);        
+        v.setVisible(true); 
+        }catch(Exception ex){JOptionPane.showMessageDialog(null, ex);}
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -673,15 +669,13 @@ public class PaginaPrincipal extends javax.swing.JFrame implements Runnable{
     private javax.swing.JMenu menuHerramien;
     private javax.swing.JMenuItem menuItemBusVen;
     private javax.swing.JMenuItem menuItemCatego;
-    private javax.swing.JMenuItem menuItemCompras;
     private javax.swing.JMenuItem menuItemCerrarSesion;
+    private javax.swing.JMenuItem menuItemCompras;
     private javax.swing.JMenuItem menuItemElimProd;
     private javax.swing.JMenuItem menuItemEmplea;
-    private javax.swing.JMenuItem menuItemFalliVen;
     private javax.swing.JMenuItem menuItemNueProd;
     private javax.swing.JMenu menuItemProd;
     private javax.swing.JMenuItem menuItemProvee;
-    private javax.swing.JMenuItem menuItemRealVen;
     private javax.swing.JMenuItem menuItemSalir;
     private javax.swing.JMenuItem menuItemUnid;
     private javax.swing.JMenuItem menuReportProd;

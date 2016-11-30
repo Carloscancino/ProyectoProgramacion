@@ -65,13 +65,30 @@ public class Conexion
          return null;   
         }
     }
-
     public int EjecutarComandoSQLImagen(String Sentencia, byte[] imagen)
     {
         try
         {
             PreparedStatement pstm = ConectarSQLite().prepareStatement(Sentencia);
             pstm.setBytes(1, imagen);
+            pstm.execute();
+            System.out.println("Ejecución exitosa");
+            Desconectar();
+            return 1;
+        }
+        catch(SQLException e)
+        {
+            System.out.println(e);
+            return 0;
+        }
+    }
+    public int EjecutarComandoSQLImagenDoble(String Sentencia, byte[] imagen,  byte[] imagen2)
+    {
+        try
+        {
+            PreparedStatement pstm = ConectarSQLite().prepareStatement(Sentencia);
+            pstm.setBytes(1, imagen);
+            pstm.setBytes(2, imagen2);
             pstm.execute();
             System.out.println("Ejecución exitosa");
             Desconectar();

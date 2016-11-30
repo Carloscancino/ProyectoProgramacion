@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a91eea78-941b-4348-8764-77d2595069b6">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT * FROM producto LIMIT 0, 10]]>
+	</queryString>
+	<field name="id_producto" class="java.lang.Object"/>
+	<field name="id_Codigo_barras" class="java.lang.Object"/>
+	<field name="Nombre" class="java.lang.Object"/>
+	<field name="Descripcion" class="java.lang.Object"/>
+	<field name="Marca" class="java.lang.Object"/>
+	<field name="Stock" class="java.lang.Object"/>
+	<field name="Unidad" class="java.lang.Object"/>
+	<field name="Precio_compra" class="java.lang.Object"/>
+	<field name="Precio_venta" class="java.lang.Object"/>
+	<field name="Utilidad" class="java.lang.Object"/>
+	<field name="Descuento" class="java.lang.Object"/>
+	<field name="Desc_fecha_inicio" class="java.lang.Object"/>
+	<field name="Desc_fecha_fin" class="java.lang.Object"/>
+	<field name="Imagen" class="java.lang.Object"/>
+	<field name="IVA" class="java.lang.Object"/>
+	<field name="Codigo_barras" class="java.lang.Object"/>
+	<field name="Categoria_id_categoria" class="java.lang.Object"/>
+	<field name="Proveedor_id_proveedor" class="java.lang.Object"/>
+	<field name="Estatus" class="java.lang.Object"/>
+	<field name="NumeroVentas" class="java.lang.Object"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="81" splitType="Stretch">
+			<rectangle>
+				<reportElement x="10" y="1" width="534" height="79" backcolor="#00CCCC" uuid="1676e7e9-c631-4cb4-bee2-799ec0ae4874"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="136" y="23" width="282" height="41" forecolor="#FFFFFF" uuid="cea939d3-baaf-484b-9809-80819dc34700"/>
+				<textElement textAlignment="Center">
+					<font size="26" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reporte de Productos]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="30" splitType="Stretch">
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="12" y="10" width="100" height="20" uuid="0353e6de-0af3-43b6-ae2a-61febfcd7816"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="193" y="6" width="177" height="20" uuid="e8c0fd8d-73b3-411b-8aeb-4dfdde65382c"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Productos más vendidos]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="31" splitType="Stretch">
+			<textField>
+				<reportElement x="10" y="11" width="100" height="20" uuid="e3d3a9a2-3958-4a08-b718-0803dc1af02c"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="529" splitType="Stretch">
+			<barChart>
+				<chart>
+					<reportElement x="56" y="0" width="434" height="250" uuid="467fed9c-e2cb-4eed-bf7c-06fc6f528319"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{NumeroVentas}]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{Nombre}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{NumeroVentas}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot>
+					<plot/>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+			<pieChart>
+				<chart>
+					<reportElement x="112" y="252" width="332" height="268" uuid="53705bef-9619-47ef-a1a8-950fa2a80e75"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA[$F{Nombre}]]></keyExpression>
+					<valueExpression><![CDATA[$F{NumeroVentas}]]></valueExpression>
+				</pieDataset>
+				<piePlot>
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+		</band>
+	</summary>
+</jasperReport>

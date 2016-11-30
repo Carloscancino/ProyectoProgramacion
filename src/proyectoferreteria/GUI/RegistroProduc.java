@@ -30,6 +30,7 @@ import javax.swing.table.DefaultTableModel;
 import jbarcodebean.JBarcodeBean;
 import net.sourceforge.jbarcodebean.model.Interleaved25;
 import proyectoferreteria.BO.ProductoBO;
+import proyectoferreteria.DAO.ManejoDeImagenes;
 import proyectoferreteria.DAO.ProductoDAO;
 
 /**
@@ -40,7 +41,10 @@ public class RegistroProduc extends javax.swing.JInternalFrame {
 
     ProductoDAO objProductoDAO = new ProductoDAO();
     ProductoBO objProductoBO = new ProductoBO();
-    byte[] imagenCodeBar = null;
+    ManejoDeImagenes metodosImagen = new ManejoDeImagenes();
+    byte[] imagenCodeBar;
+    byte[] imag;
+    byte[] imag2;
     JFileChooser SelectorImagenes;
     String rutaImagem="";
     DefaultTableModel dtm =new DefaultTableModel(
@@ -107,6 +111,24 @@ public class RegistroProduc extends javax.swing.JInternalFrame {
         objProductoBO.setId_categoria(""+cbxCateREPro.getSelectedIndex());
         objProductoBO.setId_proveedor(txtProveREPro.getText());     
 
+        if(!rutaImagem.equals(""))
+        {
+            objProductoBO.setImagen(obtenerBytes(rutaImagem));  
+        }
+        else
+        {
+            objProductoBO.setImagen(imag);
+        }
+        
+        if(imagenCodeBar != null)
+        {
+            objProductoBO.setCodigo_barras(imagenCodeBar);  
+        }
+        else
+        {
+            objProductoBO.setCodigo_barras(imag2);
+        }
+        
         return objProductoBO;
     }     
     public Date convertToFecha(String strFecha)
@@ -143,6 +165,9 @@ public class RegistroProduc extends javax.swing.JInternalFrame {
         txtIvaREPro.setValue(15);
         cbxCateREPro.setSelectedIndex(0);
         txtProveREPro.setText("");
+        lblImaProd1.setIcon(null);
+        lblImaProd.setIcon(null);
+        imagenCodeBar = null;
     }
     public void botonagregar()
     {
@@ -479,11 +504,11 @@ public class RegistroProduc extends javax.swing.JInternalFrame {
             }
         });
 
+        txtPreVentREPro.setEditable(false);
         txtPreVentREPro.setText("0");
-        txtPreVentREPro.setEnabled(false);
 
+        txtUtilREPro.setEditable(false);
         txtUtilREPro.setText("0");
-        txtUtilREPro.setEnabled(false);
 
         lblIvaProd.setText("IVA %:");
 
@@ -700,7 +725,7 @@ public class RegistroProduc extends javax.swing.JInternalFrame {
 
     private void btnCargarREProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarREProdActionPerformed
         // TODO add your handling code here:
-        SeleccionarImagen(lblImaProd);
+        SeleccionarImagen(lblImaProd1);
     }//GEN-LAST:event_btnCargarREProdActionPerformed
 
     private void btnCargarCodBarrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarCodBarrActionPerformed
@@ -766,7 +791,12 @@ public class RegistroProduc extends javax.swing.JInternalFrame {
             //System.out.println("Entre");
             calenAREPro.setDate(convertToFecha(Datos.getFech_fin_Desc()));
         }
-
+        String Id = target.getValueAt(target.getSelectedRow(), 0).toString();
+        lblImaProd1.setIcon(metodosImagen.MostrarImagen("producto","id_producto",Id,lblImaProd1));
+        imag = metodosImagen.MostrarImagenBYTE("producto","id_producto",Id);
+        
+        lblImaProd.setIcon(metodosImagen.MostrarImagenBarras("producto","id_producto",Id,lblImaProd));
+        imag2 = metodosImagen.MostrarImagenBYTEBarras("producto","id_producto",Id);
                 
     }//GEN-LAST:event_jTableProductosMouseClicked
 

@@ -31,7 +31,7 @@ public class ProveedorDAO {
      objConexion.Desconectar();    
      return ComandoEjecutado;
      }
-     
+     //SELECT * FROM proveedor WHERE Nombre LIKE '%F%'
      public DefaultTableModel Buscar(ProveedorBO objProveedor){
         DefaultTableModel dtm =new DefaultTableModel(
             new Object [][] {},

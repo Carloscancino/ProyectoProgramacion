@@ -11,11 +11,8 @@ import proyectoferreteria.Conexion.Conexion;
 public class ProductoDAO {
     Conexion objConexion = new Conexion();
     public int Agregar(ProductoBO objProducto){
-        String sentencia = "INSERT INTO producto(id_Codigo_barras,Imagen,Nombre,Descripcion,Marca,Stock,Unidad,Precio_compra,Precio_venta,Utilidad,Descuento,Desc_fecha_inicio,Desc_fecha_fin,IVA,Codigo_barras,Categoria_id_categoria,Proveedor_id_proveedor,Estatus)\n" +
-            "VALUES ('"+
-                objProducto.getId_Codigo_barra()+"','"+
-                objProducto.getImagen()+"','"+
-                objProducto.getNombre()+"','"+
+        String sentencia = "INSERT INTO producto(id_Codigo_barras,Imagen,Codigo_barras,Nombre,Descripcion,Marca,Stock,Unidad,Precio_compra,Precio_venta,Utilidad,Descuento,Desc_fecha_inicio,Desc_fecha_fin,IVA,Categoria_id_categoria,Proveedor_id_proveedor,Estatus)\n" +
+            "VALUES ('"+objProducto.getId_Codigo_barra()+"',?,?,'"+objProducto.getNombre()+"','"+
                 objProducto.getDescripcion()+"','"+
                 objProducto.getMarca()+"','"+
                 objProducto.getStock()+"','"+
@@ -27,10 +24,9 @@ public class ProductoDAO {
                 objProducto.getFech_ini_Desc()+"','"+
                 objProducto.getFech_fin_Desc()+"','"+
                 objProducto.getIVA()+"','"+
-                objProducto.getCodigo_barras()+"','"+
                 objProducto.getId_categoria()+"','"+
                 objProducto.getId_proveedor()+"',1);";
-        int resultado = objConexion.EjecutarComandoSQL(sentencia);
+        int resultado = objConexion.EjecutarComandoSQLImagenDoble(sentencia,objProducto.getImagen(),objProducto.getCodigo_barras());
         if(resultado==1)
             JOptionPane.showMessageDialog(null,"Se ha agregado correctamente","Información", JOptionPane.INFORMATION_MESSAGE);
         else
@@ -44,9 +40,7 @@ public class ProductoDAO {
     {
  //,,,,,,,,,,,,,,,,,
        String Consulta = "UPDATE producto SET "+
-                "id_Codigo_barras='"+ObjProducto.getId_Codigo_barra()+"',"+
-            //    "Imagen ='"+ObjProducto.getImagen()+"','"+
-                "Nombre='"+ObjProducto.getNombre()+"',"+
+                "id_Codigo_barras='"+ObjProducto.getId_Codigo_barra()+"',Imagen = ?, Codigo_barras = ?,"+"Nombre='"+ObjProducto.getNombre()+"',"+
                 "Descripcion ='"+ObjProducto.getDescripcion()+"',"+
                 "Marca='"+ObjProducto.getMarca()+"',"+
                 "Stock='"+ObjProducto.getStock()+"',"+
@@ -58,13 +52,12 @@ public class ProductoDAO {
                 "Desc_fecha_inicio = '"+ObjProducto.getFech_ini_Desc()+"',"+
                 "Desc_fecha_fin = '"+ObjProducto.getFech_fin_Desc()+"',"+
                 "IVA ='"+ObjProducto.getIVA()+"',"+
-            //    "Codigo_barras ='"+ObjProducto.getCodigo_barras()+"','"+
                 "Categoria_id_categoria ='"+ObjProducto.getId_categoria()+"',"+
                 "Proveedor_id_proveedor ='"+ObjProducto.getId_proveedor()+"' "+
 
                 "WHERE id_producto='"+ObjProducto.getCodigo()+"';";
        
-       int resultado = objConexion.EjecutarComandoSQL(Consulta);
+       int resultado = objConexion.EjecutarComandoSQLImagenDoble(Consulta,ObjProducto.getImagen(),ObjProducto.getCodigo_barras());
        
        if(resultado==1)
             JOptionPane.showMessageDialog(null,"Se ha modificado correctamente","Información", JOptionPane.INFORMATION_MESSAGE);
@@ -155,6 +148,41 @@ public class ProductoDAO {
             //Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }        
+    }    
+
+    public DefaultTableModel BuscarProducto(ProductoBO ObjProductoBO){
+        DefaultTableModel dtm =new DefaultTableModel(
+            new Object [][] {},
+            new String [] {
+                "Código","Código Barra","Nombre","Marca","Precio Venta","Descuento"
+            }
+        ){ @Override
+    public boolean isCellEditable(int row, int column) {
+     // Para no editar en el jTable
+       return false;
+    }};
+         
+        try{
+         Conexion objConexion= new Conexion();
+         ResultSet  Resultado=objConexion.EjecutarSentenciaSQL("SELECT * FROM producto WHERE Estatus = 1 AND Proveedor_id_proveedor = "+ObjProductoBO.getId_proveedor());
+         while(Resultado.next()){
+        // Recuperar Datos de la GUI
+        Object[] Fila={
+          Resultado.getString(1) , 
+          Resultado.getString(2),
+          Resultado.getString(3),
+          Resultado.getString(5),
+          Resultado.getString(9),
+          Resultado.getString(11),
+        };
+        // Agregar Datos al JTable
+        dtm.addRow(Fila);
+        
+        }
+         return dtm;       
+         }catch(SQLException e){
+         return null;
+         }
     }    
     
 }
